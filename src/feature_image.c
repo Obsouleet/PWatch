@@ -7,6 +7,7 @@
 	
 static int director = 1; 
 static int colourcounter=0*4;  
+static int colsetno=0;
 static int incer=0;
 static int ctr=0;
 static bool is_throttled=false;
@@ -165,6 +166,10 @@ if(is_throttled==false) {
 			
 		case ACCEL_AXIS_Y:
 				if (direction > 0) {
+					if(editmode==true) {
+						colsetno++;
+						if(colsetno>3) {colsetno=0;}
+					}
 					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis positive.");
 				} else {
 					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis negative.");
@@ -364,21 +369,23 @@ GColor others[]={	GColorWindsorTan, GColorRajah, GColorIcterine, GColorPastelYel
 					GColorSunsetOrange, GColorMelon, GColorCeleste, GColorElectricBlue, 
 					GColorMediumSpringGreen, GColorScreaminGreen, GColorSpringBud, GColorYellow};
   
- 	
+	GColor *Colsets[]={reds,blues,greens,others};
+		
 	for(int pals=0;pals<11;pals++){                                                                                                         // walk through all images of the project
 
 			incer=0; 																																																														// PURE MAGIC !!
 
 			for(int i=(colourcounter+(3*director));i!=(colourcounter+abs((4*director)-4)-director);i=(i+((director-1+director))*-1)) {          // up- or down the colour array 
-				Paletten[pals][incer]=colours[i];                                                                                         
+				Paletten[pals][incer]=Colsets[colsetno][i];                                                                                         
 				incer++;
 			}
 	}  
 	
+	static int n = sizeof(Colsets[colsetno])/sizeof(Colsets[colsetno][0]);
 	if (director==1){
 				director = 0;                                       // change direction
 				colourcounter=colourcounter + 4;                    // next colourset
-				if(colourcounter>55){colourcounter=0;}              // reset Colourcycle
+				if(colourcounter>n){colourcounter=0;}              // reset Colourcycle
 	}  else {
 				director = 1;                                       // change direction
 	}
