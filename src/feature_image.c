@@ -2,7 +2,8 @@
  
 #define TAP_TIME 2000	
 #define EDIT_MODE_DURATION 3000
-#define TRIPPLE_TAP_TIME 1100
+#define TRIPPLE_TAP_TIME 900
+#define THROTTLE_TIME 100
 	
 static int director = 1; 
 static int colourcounter=0*4;  
@@ -107,7 +108,7 @@ static void print_status(Window *window) {                                      
 
 		static char date_buffer[30]= "00:00";
 		strftime(date_buffer, 22, "%a %d.%m.%Y", tick_time);
-		strcat(strcat(date_buffer, " * "),battery_buffer);
+		strcat(strcat(date_buffer, " - "),battery_buffer);
 
 		// Update time TextLayer
 		text_layer_set_text_color(status_layer, Textcolour);
@@ -137,7 +138,7 @@ static void enter_mode_timer_reset() {
 				app_timer_cancel(tap_timer);
 				editmode=true;
 				text_layer_set_text_color(status_layer, Textcolour);
-				text_layer_set_text(status_layer, "Edit Mode");
+				text_layer_set_text(status_layer, ">>>> Edit Mode <<<<");
 				edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);
 			}
 	}
@@ -151,7 +152,7 @@ static void tap_handler(AccelAxisType axis, int32_t direction) {
 
 if(is_throttled==false) {
 		is_throttled=true;
-		throttle_timer = app_timer_register(100, reset_throttle, NULL);
+		throttle_timer = app_timer_register(THROTTLE_TIME, reset_throttle, NULL);
 	
 		switch (axis) {
 		case ACCEL_AXIS_X:
@@ -193,12 +194,12 @@ if(is_throttled==false) {
 									app_timer_cancel(tap_timer);
 									redaw_entire_screen();
 							    text_layer_set_text_color(status_layer, Textcolour);
-									text_layer_set_text(status_layer, "Edit Mode");
+									text_layer_set_text(status_layer, ">>>> Edit Mode <<<<");
 									if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
 										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
 										editmode=true;
 										text_layer_set_text_color(status_layer, Textcolour);
-										text_layer_set_text(status_layer, "Edit Mode");				
+										text_layer_set_text(status_layer, ">>>> Edit Mode <<<<");				
 									}									
 						}
 
@@ -364,15 +365,16 @@ GColor others[]={	GColorWindsorTan, GColorRajah, GColorIcterine, GColorPastelYel
 					GColorMediumSpringGreen, GColorScreaminGreen, GColorSpringBud, GColorYellow};
   
  	
-	for(int pals=0;pals<11;pals++){                                                                                                      // walk through all images of the project
+	for(int pals=0;pals<11;pals++){                                                                                                         // walk through all images of the project
 
-			incer=0; 
+			incer=0; 																																																														// PURE MAGIC !!
 
-			for(int i=(colourcounter+(3*director));i!=(colourcounter+abs((4*director)-4)-director);i=(i+((director-1+director))*-1)) {         // up- or down the colour array 
+			for(int i=(colourcounter+(3*director));i!=(colourcounter+abs((4*director)-4)-director);i=(i+((director-1+director))*-1)) {          // up- or down the colour array 
 				Paletten[pals][incer]=colours[i];                                                                                         
 				incer++;
 			}
 	}  
+	
 	if (director==1){
 				director = 0;                                       // change direction
 				colourcounter=colourcounter + 4;                    // next colourset
