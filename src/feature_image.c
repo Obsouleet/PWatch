@@ -151,7 +151,7 @@ static void tap_handler(AccelAxisType axis, int32_t direction) {
 
 if(is_throttled==false) {
 		is_throttled=true;
-		throttle_timer = app_timer_register(200, reset_throttle, NULL);
+		throttle_timer = app_timer_register(100, reset_throttle, NULL);
 	
 		switch (axis) {
 		case ACCEL_AXIS_X:
@@ -192,6 +192,7 @@ if(is_throttled==false) {
 						} else {																												// editmode single tap
 									app_timer_cancel(tap_timer);
 									redaw_entire_screen();
+							    text_layer_set_text_color(status_layer, Textcolour);
 									text_layer_set_text(status_layer, "Edit Mode");
 									if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
 										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
@@ -206,8 +207,7 @@ if(is_throttled==false) {
 				}
 				break;
 		}
-
-	}
+  }
 }
 
 
