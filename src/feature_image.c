@@ -341,35 +341,42 @@ GColor colours[]={	GColorBlueMoon,	GColorPictonBlue,	GColorCeleste,GColorWhite,
 					GColorWindsorTan,	GColorRajah,	GColorPastelYellow,	GColorWhite,		
 					GColorGreen,	GColorScreaminGreen,	GColorMelon,	GColorWhite	};
 
-GColor reds[]={		GColorBulgarianRose, GColorRoseVale, GColorMelon, GColorWhite, 
-					GColorImperialPurple, GColorPurpureus, GColorRichBrilliantLavender, GColorWhite, 
-					GColorDarkCandyAppleRed, GColorSunsetOrange, GColorMelon, GColorWhite, 
-					GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBulgarianRose, GColorBlack, 
-					GColorRed, GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBlack	};
+GColor reds[]={	GColorBulgarianRose, GColorRoseVale, GColorMelon, GColorWhite, 
+GColorImperialPurple, GColorPurpureus, GColorRichBrilliantLavender, GColorWhite, 
+GColorDarkCandyAppleRed, GColorSunsetOrange, GColorMelon, GColorWhite, 
+GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBulgarianRose, GColorBlack, 
+GColorRed, GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBlack, 
+GColorYellow, GColorLimerick, GColorArmyGreen, GColorBlack, 
+GColorYellow, GColorIcterine, GColorPastelYellow, GColorWhite};
   
-GColor blues[]={	GColorBlueMoon, GColorPictonBlue, GColorCeleste, GColorWhite, 
-					GColorDukeBlue, GColorVeryLightBlue, GColorBabyBlueEyes, GColorWhite, 
-					GColorMidnightGreen, GColorCadetBlue, GColorCeleste, GColorWhite, 
-					GColorOxfordBlue, GColorLiberty, GColorBabyBlueEyes, GColorWhite, 
-					GColorBlueMoon, GColorDukeBlue, GColorOxfordBlue, GColorBlack, 
-					GColorBlueMoon, GColorDukeBlue, GColorOxfordBlue, GColorBlack};
+GColor blues[]={GColorBlueMoon, GColorPictonBlue, GColorCeleste, GColorWhite, 
+GColorDukeBlue, GColorVeryLightBlue, GColorBabyBlueEyes, GColorWhite, 
+GColorMidnightGreen, GColorCadetBlue, GColorCeleste, GColorWhite, 
+GColorOxfordBlue, GColorLiberty, GColorBabyBlueEyes, GColorWhite, 
+GColorBlueMoon, GColorDukeBlue, GColorOxfordBlue, GColorBlack, 
+GColorBlueMoon, GColorDukeBlue, GColorOxfordBlue, GColorBlack};
 					
-GColor greens[]={	GColorDarkGreen, GColorMayGreen, GColorMelon, GColorWhite, 
-					GColorIslamicGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
-					GColorArmyGreen, GColorBrass, GColorPastelYellow, GColorWhite, 
-					GColorGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
-					GColorGreen, GColorIslamicGreen, GColorDarkGreen, GColorBlack, 
-					GColorMediumSpringGreen, GColorJaegerGreen, GColorDarkGreen, GColorBlack};
+GColor greens[]={GColorDarkGreen, GColorMayGreen, GColorMelon, GColorWhite, 
+GColorIslamicGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
+GColorArmyGreen, GColorBrass, GColorPastelYellow, GColorWhite, 
+GColorGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
+GColorGreen, GColorIslamicGreen, GColorDarkGreen, GColorBlack, 
+GColorMediumSpringGreen, GColorJaegerGreen, GColorDarkGreen, GColorBlack };
 
-GColor others[]={	GColorWindsorTan, GColorRajah, GColorIcterine, GColorPastelYellow, 
-					GColorWindsorTan, GColorRajah, GColorPastelYellow, GColorWhite, 
-					GColorWindsorTan, GColorArmyGreen, GColorBulgarianRose, GColorBlack, 
-					GColorYellow, GColorLimerick, GColorArmyGreen, GColorBlack, 
-					GColorYellow, GColorIcterine, GColorPastelYellow, GColorWhite, 
-					GColorSunsetOrange, GColorMelon, GColorCeleste, GColorElectricBlue, 
-					GColorMediumSpringGreen, GColorScreaminGreen, GColorSpringBud, GColorYellow};
-  
-	GColor *Colsets[]={reds,blues,greens,others};
+GColor others[]={GColorSunsetOrange, GColorMelon, GColorCeleste, GColorElectricBlue, 
+GColorMediumSpringGreen, GColorScreaminGreen, GColorSpringBud, GColorYellow, 
+GColorBlueMoon, GColorCadetBlue, GColorInchworm, GColorYellow, 
+GColorYellow, GColorChromeYellow, GColorOrange, GColorRed, 
+GColorMidnightGreen, GColorDarkGray, GColorBrass, GColorIcterine, 
+GColorSunsetOrange, GColorSunsetOrange, GColorRajah, GColorYellow};
+ 
+GColor darks[]={GColorBlack, GColorDarkGray, GColorLightGray, GColorWhite, 
+GColorWindsorTan, GColorRajah, GColorIcterine, GColorPastelYellow, 
+GColorWindsorTan, GColorRajah, GColorPastelYellow, GColorWhite, 
+GColorWindsorTan, GColorArmyGreen, GColorDarkGreen, GColorBlack, 
+GColorDarkGray, GColorLightGray, GColorLightGray, GColorWhite}; 
+
+	GColor *Colsets[]={reds,blues,greens,darks,others};
 		
 	for(int pals=0;pals<11;pals++){                                                                                                         // walk through all images of the project
 
