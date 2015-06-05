@@ -3,54 +3,14 @@
     "capabilities": [
         ""
     ],
-    "companyName": "womens.playground@gmail.com",
-    "longName": "second",
+    "companyName": "Finnegan",
+    "longName": "Stymple Color Watchface",
     "projectType": "native",
     "resources": {
         "media": [
             {
-                "file": "images/zwei.png",
-                "name": "digit_2",
-                "type": "png"
-            },
-            {
-                "file": "images/vier.png",
-                "name": "digit_4",
-                "type": "png"
-            },
-            {
-                "file": "images/sieben.png",
-                "name": "digit_7",
-                "type": "png"
-            },
-            {
-                "file": "images/sechs.png",
-                "name": "digit_6",
-                "type": "png"
-            },
-            {
-                "file": "images/null.png",
-                "name": "digit_0",
-                "type": "png"
-            },
-            {
-                "file": "images/neun.png",
-                "name": "digit_9",
-                "type": "png"
-            },
-            {
-                "file": "images/fuenf.png",
-                "name": "digit_5",
-                "type": "png"
-            },
-            {
-                "file": "images/Eins.png",
-                "name": "digit_1",
-                "type": "png"
-            },
-            {
-                "file": "images/drei.png",
-                "name": "digit_3",
+                "file": "images/acht.png",
+                "name": "digit_8",
                 "type": "png"
             },
             {
@@ -59,21 +19,60 @@
                 "type": "png"
             },
             {
-                "file": "images/acht.png",
-                "name": "digit_8",
+                "file": "images/drei.png",
+                "name": "digit_3",
+                "type": "png"
+            },
+            {
+                "file": "images/Eins.png",
+                "name": "digit_1",
+                "type": "png"
+            },
+            {
+                "file": "images/fuenf.png",
+                "name": "digit_5",
+                "type": "png"
+            },
+            {
+                "file": "images/neun.png",
+                "name": "digit_9",
+                "type": "png"
+            },
+            {
+                "file": "images/null.png",
+                "name": "digit_0",
+                "type": "png"
+            },
+            {
+                "file": "images/sechs.png",
+                "name": "digit_6",
+                "type": "png"
+            },
+            {
+                "file": "images/sieben.png",
+                "name": "digit_7",
+                "type": "png"
+            },
+            {
+                "file": "images/vier.png",
+                "name": "digit_4",
+                "type": "png"
+            },
+            {
+                "file": "images/zwei.png",
+                "name": "digit_2",
                 "type": "png"
             }
         ]
     },
     "sdkVersion": "3",
-    "shortName": "second",
+    "shortName": "Stymple",
     "targetPlatforms": [
         "basalt"
     ],
     "uuid": "1535c8ce-e0aa-40d5-84e7-45ff1abfdb46",
-    "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
-        "watchface": false
+        "watchface": true
     }
 }

@@ -119,7 +119,7 @@ static void print_status(Window *window) {                                      
 // TIMER_CALLBACK ---------------------------------------------------------------------------------------------------------------------------
 
 static void timer_callback() {
-  text_layer_set_text(status_layer, "");
+	if(editmode==false){text_layer_set_text(status_layer, "");}
   // DEBUG ONLY - VIBE TRIGGERS ANOTHER TAP
   // vibes_short_pulse();
 }
@@ -136,10 +136,9 @@ static void edit_mode_timer_reset() {
 static void enter_mode_timer_reset() {
 	if(editmode==false) {																					// trippleclick and outside editmode 
 			if(ctr>2) {
-				app_timer_cancel(tap_timer);
 				editmode=true;
 				text_layer_set_text_color(status_layer, Textcolour);
-				text_layer_set_text(status_layer, ">>>> Edit Mode <<<<");
+				text_layer_set_text(status_layer, ">> Color Change Mode <<");
 				edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);
 			}
 	}
@@ -158,9 +157,9 @@ if(is_throttled==false) {
 		switch (axis) {
 		case ACCEL_AXIS_X:
 				if (direction > 0) {
-					APP_LOG(APP_LOG_LEVEL_INFO, "X axis positive.");
+//					APP_LOG(APP_LOG_LEVEL_INFO, "X axis positive.");
 				} else {
-					APP_LOG(APP_LOG_LEVEL_INFO, "X axis negative.");
+//					APP_LOG(APP_LOG_LEVEL_INFO, "X axis negative.");
 				}
 				break;
 			
@@ -168,11 +167,19 @@ if(is_throttled==false) {
 				if (direction > 0) {
 					if(editmode==true) {
 						colsetno++;
-						if(colsetno>3) {colsetno=0;}
+						director = 1; 
+						colourcounter=0; 
+						if(colsetno>4) {colsetno=0;}
+						redaw_entire_screen();
+						text_layer_set_text_color(status_layer, Textcolour);
+						text_layer_set_text(status_layer, ">> Color Change Mode <<");
+										if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
+										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
+ 									  }									
 					}
-					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis positive.");
+//					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis positive.");
 				} else {
-					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis negative.");
+//					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis negative.");
 				}
 				break;
 			
@@ -185,31 +192,31 @@ if(is_throttled==false) {
 									text_layer_set_text_color(status_layer, Textcolour);
 									print_status(s_main_window);
 								}	
-								APP_LOG(APP_LOG_LEVEL_INFO, "normal single tap");
+//								APP_LOG(APP_LOG_LEVEL_INFO, "normal single tap");
 																
 								if(ctr==0){
 										enter_mode_timer = app_timer_register(TRIPPLE_TAP_TIME, enter_mode_timer_reset, NULL);
 										ctr=1;
-										APP_LOG(APP_LOG_LEVEL_INFO, "ctr = 1");
+//										APP_LOG(APP_LOG_LEVEL_INFO, "ctr = 1");
 								} else {
 										ctr++;
-										APP_LOG(APP_LOG_LEVEL_INFO, "ctr ++");
+//										APP_LOG(APP_LOG_LEVEL_INFO, "ctr ++");
 								}
 						} else {																												// editmode single tap
-									app_timer_cancel(tap_timer);
+	
 									redaw_entire_screen();
 							    text_layer_set_text_color(status_layer, Textcolour);
-									text_layer_set_text(status_layer, ">>>> Edit Mode <<<<");
+									text_layer_set_text(status_layer, ">> Color Change Mode <<");
 									if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
 										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
 										editmode=true;
-										text_layer_set_text_color(status_layer, Textcolour);
-										text_layer_set_text(status_layer, ">>>> Edit Mode <<<<");				
+					//					text_layer_set_text_color(status_layer, Textcolour);
+					//					text_layer_set_text(status_layer, ">> Color Change Mode <<");				
 									}									
 						}
 
 				} else {
-					APP_LOG(APP_LOG_LEVEL_INFO, "Z axis negative.");
+//					APP_LOG(APP_LOG_LEVEL_INFO, "Z axis negative.");
 				}
 				break;
 		}
@@ -326,28 +333,12 @@ static void redaw_entire_screen(){
 
 		 //  Color Sets
 
-GColor colours[]={	GColorBlueMoon,	GColorPictonBlue,	GColorCeleste,GColorWhite,
-					GColorWindsorTan,	GColorRajah,	GColorIcterine,	GColorPastelYellow,		
-					GColorDarkGreen,	GColorMayGreen,	GColorMelon,	GColorWhite,		
-					GColorBlack,	GColorDarkGray,	GColorLightGray,	GColorWhite,		
-					GColorIslamicGreen,	GColorScreaminGreen,	GColorMelon,	GColorWhite,		
-					GColorDukeBlue,	GColorVeryLightBlue,	GColorBabyBlueEyes,	GColorWhite,		
-					GColorArmyGreen,	GColorBrass,	GColorPastelYellow,	GColorWhite,		
-					GColorBulgarianRose,	GColorRoseVale,	GColorMelon,	GColorWhite,		
-					GColorImperialPurple,	GColorPurpureus,	GColorRichBrilliantLavender,	GColorWhite,		
-					GColorMidnightGreen,	GColorCadetBlue,	GColorCeleste,	GColorWhite,		
-					GColorOxfordBlue,	GColorLiberty,	GColorBabyBlueEyes,	GColorWhite,		
-					GColorDarkCandyAppleRed,	GColorSunsetOrange,	GColorMelon,	GColorWhite,		
-					GColorWindsorTan,	GColorRajah,	GColorPastelYellow,	GColorWhite,		
-					GColorGreen,	GColorScreaminGreen,	GColorMelon,	GColorWhite	};
 
 GColor reds[]={	GColorBulgarianRose, GColorRoseVale, GColorMelon, GColorWhite, 
 GColorImperialPurple, GColorPurpureus, GColorRichBrilliantLavender, GColorWhite, 
 GColorDarkCandyAppleRed, GColorSunsetOrange, GColorMelon, GColorWhite, 
 GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBulgarianRose, GColorBlack, 
-GColorRed, GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBlack, 
-GColorYellow, GColorLimerick, GColorArmyGreen, GColorBlack, 
-GColorYellow, GColorIcterine, GColorPastelYellow, GColorWhite};
+GColorRed, GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBlack};
   
 GColor blues[]={GColorBlueMoon, GColorPictonBlue, GColorCeleste, GColorWhite, 
 GColorDukeBlue, GColorVeryLightBlue, GColorBabyBlueEyes, GColorWhite, 
@@ -376,7 +367,10 @@ GColorWindsorTan, GColorRajah, GColorPastelYellow, GColorWhite,
 GColorWindsorTan, GColorArmyGreen, GColorDarkGreen, GColorBlack, 
 GColorDarkGray, GColorLightGray, GColorLightGray, GColorWhite}; 
 
-	GColor *Colsets[]={reds,blues,greens,darks,others};
+GColor *Colsets[]={reds,blues,greens,darks,others};
+
+int laengen[]={5,6,6,5,6};																																						// array lenghts of colorsets
+	
 		
 	for(int pals=0;pals<11;pals++){                                                                                                         // walk through all images of the project
 
@@ -388,13 +382,13 @@ GColorDarkGray, GColorLightGray, GColorLightGray, GColorWhite};
 			}
 	}  
 	
-	static int n = sizeof(Colsets[colsetno])/sizeof(Colsets[colsetno][0]);
+
 	if (director==1){
-				director = 0;                                       // change direction
-				colourcounter=colourcounter + 4;                    // next colourset
-				if(colourcounter>n){colourcounter=0;}              // reset Colourcycle
+				director = 0;                                       										// change direction
+				colourcounter=colourcounter + 4;                    										// next colourset
+				if(colourcounter>(laengen[colsetno]-1)*4){colourcounter=0;}             // reset Colourcycle
 	}  else {
-				director = 1;                                       // change direction
+				director = 1;                                       										// change direction
 	}
 	 
 	time_t temp = time(NULL);
@@ -449,6 +443,7 @@ static void init() {
  
 static void deinit() {
  	 window_destroy(s_main_window);
+   accel_tap_service_unsubscribe();
 }
  
 int main(void) {
