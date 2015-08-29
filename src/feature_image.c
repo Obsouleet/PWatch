@@ -302,6 +302,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_layer, bitmap_layer_get_layer(bar_layer));
  
   // Status Text Layer
+	
   status_layer = text_layer_create(GRect(7, 76, 130, 17));
   text_layer_set_background_color(status_layer, GColorClear);
   text_layer_set_font(status_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
