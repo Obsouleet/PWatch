@@ -9,9 +9,29 @@
     "resources": {
         "media": [
             {
+                "file": "images/Eins.png",
+                "name": "digit_1",
+                "type": "png"
+            },
+            {
                 "file": "images/acht.png",
                 "menuIcon": true,
                 "name": "digit_8",
+                "type": "png"
+            },
+            {
+                "file": "images/null.png",
+                "name": "digit_0",
+                "type": "png"
+            },
+            {
+                "file": "images/neun.png",
+                "name": "digit_9",
+                "type": "png"
+            },
+            {
+                "file": "images/zwei.png",
+                "name": "digit_2",
                 "type": "png"
             },
             {
@@ -25,28 +45,8 @@
                 "type": "png"
             },
             {
-                "file": "images/Eins.png",
-                "name": "digit_1",
-                "type": "png"
-            },
-            {
-                "file": "images/fuenf.png",
-                "name": "digit_5",
-                "type": "png"
-            },
-            {
-                "file": "images/neun.png",
-                "name": "digit_9",
-                "type": "png"
-            },
-            {
-                "file": "images/null.png",
-                "name": "digit_0",
-                "type": "png"
-            },
-            {
-                "file": "images/sechs.png",
-                "name": "digit_6",
+                "file": "images/vier.png",
+                "name": "digit_4",
                 "type": "png"
             },
             {
@@ -55,13 +55,13 @@
                 "type": "png"
             },
             {
-                "file": "images/vier.png",
-                "name": "digit_4",
+                "file": "images/sechs.png",
+                "name": "digit_6",
                 "type": "png"
             },
             {
-                "file": "images/zwei.png",
-                "name": "digit_2",
+                "file": "images/fuenf.png",
+                "name": "digit_5",
                 "type": "png"
             }
         ]
