@@ -1,13 +1,13 @@
 #include "pebble.h"
  
-#define TAP_TIME 2000	
+#define TAP_TIME 3000	
 #define EDIT_MODE_DURATION 3000
-#define TRIPPLE_TAP_TIME 900
+#define TRIPPLE_TAP_TIME 8000
 #define THROTTLE_TIME 100
 	
-static int director = 1; 
+static int director = 0; 
 static int colourcounter=0*4;  
-static int colsetno=0;
+static int colsetno=3;
 static int incer=0;
 static int ctr=0;
 static bool is_throttled=false;
@@ -150,79 +150,113 @@ ctr=0;
 
 static void tap_handler(AccelAxisType axis, int32_t direction) {
 
-if(is_throttled==false) {
-		is_throttled=true;
-		throttle_timer = app_timer_register(THROTTLE_TIME, reset_throttle, NULL);
+//if(is_throttled==false) {
+//		is_throttled=true;
+//		throttle_timer = app_timer_register(THROTTLE_TIME, reset_throttle, NULL);
 	
 		switch (axis) {
 		case ACCEL_AXIS_X:
-				if (direction > 0) {
+//				if (direction > 0) {
 //					APP_LOG(APP_LOG_LEVEL_INFO, "X axis positive.");
-				} else {
+//				} else {
 //					APP_LOG(APP_LOG_LEVEL_INFO, "X axis negative.");
-				}
+//				}
 				break;
 			
 		case ACCEL_AXIS_Y:
-				if (direction > 0) {
-					if(editmode==true) {
-						colsetno++;
-						director = 1; 
-						colourcounter=0; 
-						if(colsetno>4) {colsetno=0;}
+//				if (direction > 0) {
+//					if(editmode==true) {
+//						colsetno++;
+//						director = 1; 
+//						colourcounter=0; 
+//						if(colsetno>4) {colsetno=0;}
 						redaw_entire_screen();
-						text_layer_set_text_color(status_layer, Textcolour);
-						text_layer_set_text(status_layer, ">> Color Change Mode <<");
-										if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
-										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
- 									  }									
-					}
+//						text_layer_set_text_color(status_layer, Textcolour);
+//						text_layer_set_text(status_layer, ">> Color Change Mode <<");
+//										if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
+//										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
+// 									  }									
+//					}
 //					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis positive.");
-				} else {
+	//			} else {
 //					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis negative.");
-				}
-				break;
-			
-		case ACCEL_AXIS_Z:
-				if (direction > 0) {
-																// display date if not in edit mode
-						if(editmode==false){ 
-								if(app_timer_reschedule(tap_timer, TAP_TIME)==false) {
-									tap_timer = app_timer_register(TAP_TIME, timer_callback, NULL);														// reschedule TAPtimer else set em 				
-									text_layer_set_text_color(status_layer, Textcolour);
-									print_status(s_main_window);
-								}	
+
+//						if(editmode==false){ 
+//								if(app_timer_reschedule(tap_timer, TAP_TIME)==false) {
+//									tap_timer = app_timer_register(TAP_TIME, timer_callback, NULL);														// reschedule TAPtimer else set em 				
+//									text_layer_set_text_color(status_layer, Textcolour);
+//									print_status(s_main_window);
+//								}	
 //								APP_LOG(APP_LOG_LEVEL_INFO, "normal single tap");
 																
-								if(ctr==0){
-										enter_mode_timer = app_timer_register(TRIPPLE_TAP_TIME, enter_mode_timer_reset, NULL);
-										ctr=1;
+//								if(ctr==0){
+//										enter_mode_timer = app_timer_register(TRIPPLE_TAP_TIME, enter_mode_timer_reset, NULL);
+//										ctr=1;
 //										APP_LOG(APP_LOG_LEVEL_INFO, "ctr = 1");
-								} else {
-										ctr++;
+//								} else {
+//										ctr++;
 //										APP_LOG(APP_LOG_LEVEL_INFO, "ctr ++");
-								}
-						} else {																												// editmode single tap
+//								}
+//						} else {																												// editmode single tap
 	
-									redaw_entire_screen();
-							    text_layer_set_text_color(status_layer, Textcolour);
-									text_layer_set_text(status_layer, ">> Color Change Mode <<");
-									if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
-										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
-										editmode=true;
+//									redaw_entire_screen();
+//							    text_layer_set_text_color(status_layer, Textcolour);
+//									text_layer_set_text(status_layer, ">> Color Change Mode <<");
+//									if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
+//										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
+//										editmode=true;
 					//					text_layer_set_text_color(status_layer, Textcolour);
 					//					text_layer_set_text(status_layer, ">> Color Change Mode <<");				
-									}									
-						}
+//						}									
+//						}
+			
+				
+//				}
+//			}
+			
+	//			break;
+	
+			
+		case ACCEL_AXIS_Z:
+//				if (direction > 0) {
+																// display date if not in edit mode
+		//				if(editmode==false){ 
+		//						if(app_timer_reschedule(tap_timer, TAP_TIME)==false) {
+		//							tap_timer = app_timer_register(TAP_TIME, timer_callback, NULL);														// reschedule TAPtimer else set em 				
+		//							text_layer_set_text_color(status_layer, Textcolour);
+		//							print_status(s_main_window);
+		//						}	
+//								APP_LOG(APP_LOG_LEVEL_INFO, "normal single tap");
+																
+	//							if(ctr==0){
+	//									enter_mode_timer = app_timer_register(TRIPPLE_TAP_TIME, enter_mode_timer_reset, NULL);
+	//									ctr=1;
+//										APP_LOG(APP_LOG_LEVEL_INFO, "ctr = 1");
+//								} else {
+//										ctr++;
+//										APP_LOG(APP_LOG_LEVEL_INFO, "ctr ++");
+//								}
+//						} else {																												// editmode single tap
+	
+//									redaw_entire_screen();
+//							    text_layer_set_text_color(status_layer, Textcolour);
+//									text_layer_set_text(status_layer, ">> Color Change Mode <<");
+//									if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
+//										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
+//										editmode=true;
+					//					text_layer_set_text_color(status_layer, Textcolour);
+					//					text_layer_set_text(status_layer, ">> Color Change Mode <<");				
+//									}									
+//						}
 
-				} else {
+//				} else {
 //					APP_LOG(APP_LOG_LEVEL_INFO, "Z axis negative.");
-				}
+//				}
 				break;
-		}
-  }
+//		}
+ // }
 }
-
+}
 
 // UPDATE_TIME -----------------------------------------------------------------------------------------------------------------------------------
 
@@ -433,7 +467,7 @@ static void init() {
 		s_main_window = window_create();
 //		window_set_fullscreen(s_main_window, true);
 		window_set_background_color(s_main_window, GColorBlack);
-		accel_tap_service_subscribe(tap_handler);
+//		accel_tap_service_subscribe(tap_handler);
 		tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
 		window_set_window_handlers(s_main_window, (WindowHandlers) {
 				.load = main_window_load,

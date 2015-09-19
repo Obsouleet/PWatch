@@ -1,15 +1,16 @@
 {
     "appKeys": {},
     "capabilities": [
-        ""
+        "configurable"
     ],
-    "companyName": "Finnegan",
+    "companyName": "Hendrik Rausch",
     "longName": "Stymple Color Watchface",
     "projectType": "native",
     "resources": {
         "media": [
             {
                 "file": "images/acht.png",
+                "menuIcon": true,
                 "name": "digit_8",
                 "type": "png"
             },
