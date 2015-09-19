@@ -5,13 +5,15 @@
 #define TRIPPLE_TAP_TIME 8000
 #define THROTTLE_TIME 100
 	
+#define KEY_COLOR_NR 0
+#define KEY_INVERTED 0
+#define KEY_SHOW_DATE 0
+	
 static int director = 0; 
 static int colourcounter=0*4;  
 static int colsetno=3;
 static int incer=0;
 static int ctr=0;
-static bool is_throttled=false;
-static bool editmode=false;
 
 
 static Window *s_main_window;
@@ -23,11 +25,6 @@ static BitmapLayer *links_unten_layer;
 static BitmapLayer *rechts_unten_layer;
 
 static TextLayer *status_layer;
-
-static AppTimer *tap_timer = NULL;	
-static AppTimer *throttle_timer = NULL;	
-static AppTimer *enter_mode_timer = NULL;	
-static AppTimer *edit_mode_timer = NULL;	
 
 static GBitmap *IMAGE_0;
 static GBitmap *IMAGE_1;
@@ -114,148 +111,6 @@ static void print_status(Window *window) {                                      
 		// Update time TextLayer
 		text_layer_set_text_color(status_layer, Textcolour);
 		text_layer_set_text(status_layer, date_buffer);
-}
-
-// TIMER_CALLBACK ---------------------------------------------------------------------------------------------------------------------------
-
-static void timer_callback() {
-	if(editmode==false){text_layer_set_text(status_layer, "");}
-  // DEBUG ONLY - VIBE TRIGGERS ANOTHER TAP
-  // vibes_short_pulse();
-}
-
-static void reset_throttle() {
-	is_throttled=false;
-}
-
-static void edit_mode_timer_reset() {
-	editmode=false;
-	text_layer_set_text(status_layer, "");
-}
-
-static void enter_mode_timer_reset() {
-	if(editmode==false) {																					// trippleclick and outside editmode 
-			if(ctr>2) {
-				editmode=true;
-				text_layer_set_text_color(status_layer, Textcolour);
-				text_layer_set_text(status_layer, ">> Color Change Mode <<");
-				edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);
-			}
-	}
-ctr=0;	
-}
-
-
-// TAP-HANDLER -------------------------------------------------------------------------------------------------------------------------------
-
-static void tap_handler(AccelAxisType axis, int32_t direction) {
-
-//if(is_throttled==false) {
-//		is_throttled=true;
-//		throttle_timer = app_timer_register(THROTTLE_TIME, reset_throttle, NULL);
-	
-		switch (axis) {
-		case ACCEL_AXIS_X:
-//				if (direction > 0) {
-//					APP_LOG(APP_LOG_LEVEL_INFO, "X axis positive.");
-//				} else {
-//					APP_LOG(APP_LOG_LEVEL_INFO, "X axis negative.");
-//				}
-				break;
-			
-		case ACCEL_AXIS_Y:
-//				if (direction > 0) {
-//					if(editmode==true) {
-//						colsetno++;
-//						director = 1; 
-//						colourcounter=0; 
-//						if(colsetno>4) {colsetno=0;}
-						redaw_entire_screen();
-//						text_layer_set_text_color(status_layer, Textcolour);
-//						text_layer_set_text(status_layer, ">> Color Change Mode <<");
-//										if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
-//										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
-// 									  }									
-//					}
-//					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis positive.");
-	//			} else {
-//					APP_LOG(APP_LOG_LEVEL_INFO, "Y axis negative.");
-
-//						if(editmode==false){ 
-//								if(app_timer_reschedule(tap_timer, TAP_TIME)==false) {
-//									tap_timer = app_timer_register(TAP_TIME, timer_callback, NULL);														// reschedule TAPtimer else set em 				
-//									text_layer_set_text_color(status_layer, Textcolour);
-//									print_status(s_main_window);
-//								}	
-//								APP_LOG(APP_LOG_LEVEL_INFO, "normal single tap");
-																
-//								if(ctr==0){
-//										enter_mode_timer = app_timer_register(TRIPPLE_TAP_TIME, enter_mode_timer_reset, NULL);
-//										ctr=1;
-//										APP_LOG(APP_LOG_LEVEL_INFO, "ctr = 1");
-//								} else {
-//										ctr++;
-//										APP_LOG(APP_LOG_LEVEL_INFO, "ctr ++");
-//								}
-//						} else {																												// editmode single tap
-	
-//									redaw_entire_screen();
-//							    text_layer_set_text_color(status_layer, Textcolour);
-//									text_layer_set_text(status_layer, ">> Color Change Mode <<");
-//									if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
-//										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
-//										editmode=true;
-					//					text_layer_set_text_color(status_layer, Textcolour);
-					//					text_layer_set_text(status_layer, ">> Color Change Mode <<");				
-//						}									
-//						}
-			
-				
-//				}
-//			}
-			
-	//			break;
-	
-			
-		case ACCEL_AXIS_Z:
-//				if (direction > 0) {
-																// display date if not in edit mode
-		//				if(editmode==false){ 
-		//						if(app_timer_reschedule(tap_timer, TAP_TIME)==false) {
-		//							tap_timer = app_timer_register(TAP_TIME, timer_callback, NULL);														// reschedule TAPtimer else set em 				
-		//							text_layer_set_text_color(status_layer, Textcolour);
-		//							print_status(s_main_window);
-		//						}	
-//								APP_LOG(APP_LOG_LEVEL_INFO, "normal single tap");
-																
-	//							if(ctr==0){
-	//									enter_mode_timer = app_timer_register(TRIPPLE_TAP_TIME, enter_mode_timer_reset, NULL);
-	//									ctr=1;
-//										APP_LOG(APP_LOG_LEVEL_INFO, "ctr = 1");
-//								} else {
-//										ctr++;
-//										APP_LOG(APP_LOG_LEVEL_INFO, "ctr ++");
-//								}
-//						} else {																												// editmode single tap
-	
-//									redaw_entire_screen();
-//							    text_layer_set_text_color(status_layer, Textcolour);
-//									text_layer_set_text(status_layer, ">> Color Change Mode <<");
-//									if(app_timer_reschedule(edit_mode_timer, EDIT_MODE_DURATION)==false) {
-//										edit_mode_timer = app_timer_register(EDIT_MODE_DURATION, edit_mode_timer_reset, NULL);					// keep editmode for another 3 secs
-//										editmode=true;
-					//					text_layer_set_text_color(status_layer, Textcolour);
-					//					text_layer_set_text(status_layer, ">> Color Change Mode <<");				
-//									}									
-//						}
-
-//				} else {
-//					APP_LOG(APP_LOG_LEVEL_INFO, "Z axis negative.");
-//				}
-				break;
-//		}
- // }
-}
 }
 
 // UPDATE_TIME -----------------------------------------------------------------------------------------------------------------------------------
