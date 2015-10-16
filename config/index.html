@@ -1,113 +1,330 @@
+
 <!DOCTYPE html>
 <html>
-  <head>
-  <title>Slate Example Configuration</title>
-  <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
-  <script src='js/slate.min.js'></script>
-  <style>
-  .title {
-    padding: 15px 10px;
-    text-transform: uppercase;
-    font-family: 'PT Sans', sans-serif;
-    font-size: 1.2em;
-    font-weight: 500;
-    color: #888888;
-    text-align: center;
+	<head>
+		<title>Stymple Configuration</title>
+		<link rel='stylesheet' type='text/css' href='css/slate.min.css'>
+  
+		<script src='js/slate.min.js'></script>
+
+		<style>
+		  .title {
+			padding: 15px 10px;
+			text-transform: uppercase;
+			font-family: 'PT Sans', sans-serif;
+			font-size: 1.2em;
+			font-weight: 500;
+			color: #888888;
+			text-align: center;
+		  }
+		</style>
+	</head>
+	<body>
+
+		<canvas id="Canvas2" width="100" height = "100" style="padding-left: 0;
+						padding-right: 0;
+						margin-left: auto;
+						margin-right: auto;
+						margin-top: 20px;
+						display: block;
+						width: 100px;
+						border: 1px;
+						border-color: #000000;">
+		</canvas>
+		<div class='item-container'>
+			<div class='item-container-header'>
+				 				 
+			</div>
+			<div class='item-container-content'>
+				<label class='item'>
+					Swap Colors
+					<input id='inverted' type='checkbox' class='item-checkbox'>
+				</label>
+			</div>
+		</div>
+		<br>
+		<h1 class='title'>Colors</h1>
+
+
+		<div class='item-container'>
+			<div class='item-container-header'>
+				Choose Your Own Colors
+			</div>
+			<div class='item-container-content'>
+				<label class='item'>
+					Background Color
+          				<input id='background' type='text' class='item-color item-color-normal' value='#000000'>
+				</label>
+        			<label class='item'>
+          				Foreground Color
+          				<input id='foreground' type='text' class='item-color item-color-normal' value='#000000'>
+        			</label>
+      			</div>
+		</div>
+
+		<div class='item-container'>
+			<div class='item-container-header'>Or Take One Of The Presets</div>
+				<div class='item-container-content'>
+					<div class='button-container'>
+						<table style="margin-left:auto; margin-right:auto;"> 
+							<tr> 
+								<td style="width:90px; height:50px;"><input id='down_button' type='button' class='item-button' value='<'></td>
+								<td><b id="Counter">Preset 1/27</b></td>
+								<td style="width:90px; height:50px;"><input id='up_button' type='button' class='item-button' value='>'></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<h1 class='title'>Additional Parameters</h1>
+		<div class='item-container'>
+			<div class='item-container-content'>
+				<label class='item'>
+					12 Hour Format
+					<input id='twelvehr' type='checkbox' class='item-checkbox'>
+				</label>  
+				<label class='item'>
+					Show Date
+					<input id='showdate' type='checkbox' class='item-checkbox'>
+				</label>
+			</div>
+		</div>  
+			
+<!--		<div class='item-container-footer'>
+			<br>
+		</div>
+-->
+		<div class='item-container'>
+			<div class='button-container'>
+				<input id='submit_button' type='button' class='item-button' value='SUBMIT'>
+			</div>
+		</div>
+		
+	<!-- Start of StatCounter Code for Default Guide -->
+		<script type="text/javascript">
+			var sc_project=10634946; 
+			var sc_invisible=1; 
+			var sc_security="dafe4577"; 
+			var scJsHost = (("https:" == document.location.protocol) ?	"https://secure." : "http://www.");
+			document.write("<sc"+"ript type='text/javascript' src='" + scJsHost + "statcounter.com/counter/counter.js'></"+"script>");
+		</script>
+		<noscript>
+			<div class="statcounter">
+				<a title="shopify site analytics" href="http://statcounter.com/shopify/" target="_blank"><img class="statcounter" src="http://c.statcounter.com/10634946/0/dafe4577/1/" alt="shopify site analytics"></a>
+			</div>
+		</noscript>
+	<!-- End of StatCounter Code for Default Guide -->
+		<script>
+		
+function dechex(number) {
+  //  discuss at: http://phpjs.org/functions/dechex/
+  // original by: Philippe Baumann
+  // bugfixed by: Onno Marsman
+  // improved by: http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
+  //    input by: pilus
+  //   example 1: dechex(10);
+  //   returns 1: 'a'
+  //   example 2: dechex(47);
+  //   returns 2: '2f'
+  //   example 3: dechex(-1415723993);
+  //   returns 3: 'ab9dc427'
+  if (number < 0) {
+    number = 0xFFFFFFFF + number + 1;
   }
-  </style>
-  </head>
-
-  <body>
-    <h1 class='title'>Slate Example Configuration</h1>
-
-    <div class='item-container'>
-      <div class='item-container-content'>
-        <div class='item'>
-          Use this configuration page to choose the settings you would like applied to this app.
-        </div>
-      </div>
-    </div>
-
-    <div class='item-container'>
-      <div class='item-container-header'>Customizability</div>
-      <div class='item-container-content'>
-        <label class='item'>
-          Background Color
-          <input id='background_color_picker' type='text' class='item-color item-color-sunny' value='#000000'>
-        </label>
-      </div>
-      <div class='item-container-footer'>
-        Choose the app's background color. Used if High Contrast Mode is not selected. Note: Only available on Basalt watches that support many colors.
-      </div>
-    </div>
-
-    <div class='item-container'>
-      <div class='item-container-header'>Accessibility</div>
-      <div class='item-container-content'>
-        <label class='item'>
-          High Contrast Mode
-          <input id='high_contrast_checkbox' type='checkbox' class='item-toggle'>
-        </label>
-      </div>
-      <div class='item-container-footer'>
-        This switches the app colors to a higher contrast set that promotes readability in low light.
-      </div>
-    </div>
-
-    <div class='item-container'>
-      <div class='button-container'>
-        <input id='submit_button' type='button' class='item-button' value='SUBMIT'>
-      </div>
-    </div>
-  </body>
-  <script>
-  function getConfigData() {
-    var backgroundColorPicker = document.getElementById('background_color_picker');
-    var highContrastCheckbox = document.getElementById('high_contrast_checkbox');
- 
-    var options = {
-      'background_color': backgroundColorPicker.value,
-      'high_contrast': highContrastCheckbox.checked
-    };
-
-    // Save for next launch
-    localStorage['background_color'] = options['background_color'];
-    localStorage['high_contrast'] = options['high_contrast'];
-
-    console.log('Got options: ' + JSON.stringify(options));
-    return options;
-  }
-
-  function getQueryParam(variable, defaultValue) {
-    var query = location.search.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split('=');
-      if (pair[0] === variable) {
-        return decodeURIComponent(pair[1]);
-      }
-    }
-    return defaultValue || false;
-  }
- 
-  var submitButton = document.getElementById('submit_button');
-  submitButton.addEventListener('click', function() {
-    console.log('Submit');
-
-    // Set the return URL depending on the runtime environment
-    var return_to = getQueryParam('return_to', 'pebblejs://close#');
-    document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
-  });
-
-  (function() {
-    var backgroundColorPicker = document.getElementById('background_color_picker');
-    var highContrastCheckbox = document.getElementById('high_contrast_checkbox');
-
-    // Load any previously saved configuration, if available
-    if(localStorage['high_contrast']) {
-      highContrastCheckbox.checked = JSON.parse(localStorage['high_contrast']);
-      backgroundColorPicker.value = localStorage['background_color'];
-    }
-  })();
-  </script>
+  return parseInt(number, 10)
+    .toString(16);
+}
+		
+			var aktfarbe=0;
+			var gg=0;
+			var one=0;
+			var two=0;
+			var three=0;
+			
+			var drawcols= new Array("#FFF", "#AAA", "#555","#000");	
+			var steps = new Array(0,0,0);
+		    var farben = new Array(
+							"#500", "#fff",
+							"#505", "#fff",
+							"#A00", "#fff",
+							"#A00", "#000",
+							"#F00", "#000",
+							"#05F", "#FFF",
+							"#00A", "#FFF",
+							"#055", "#FFF",
+							"#005", "#FFF",
+							"#05F", "#000",
+							"#050", "#FFF",
+							"#0A0", "#FFF",
+							"#550", "#FFF",
+							"#0F0", "#FFF",
+							"#0F0", "#000",
+							"#0FA", "#000",
+							"#F55", "#5FF",
+							"#0FA", "#FF0",
+							"#05F", "#FF0",
+							"#FF0", "#F00",
+							"#055", "#FF5",
+							"#F55", "#FF0",
+							"#000", "#FFF",
+							"#A50", "#FFA",
+							"#A50", "#FFF",
+							"#A50", "#000",
+							"#555", "#FFF");
+		  
+			  // own style
+			var hoch = document.getElementById('up_button');
+			hoch.addEventListener('click', function() {
+				  
+				aktfarbe=aktfarbe+1;
+				if (aktfarbe>26) {aktfarbe=0;}
+				document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";
+				document.getElementById('inverted').checked=false;
+				drawcols[0] = farben[aktfarbe*2];
+				drawcols[3] = farben[aktfarbe*2+1];
+				draw_it();
+			});
+			var runter = document.getElementById('down_button');
+			runter.addEventListener('click', function() {
+								  
+				aktfarbe=aktfarbe-1;
+				if (aktfarbe<0) {aktfarbe=26;}
+				document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";
+				document.getElementById('inverted').checked=false;
+				drawcols[0] = farben[aktfarbe*2];
+				drawcols[3] = farben[aktfarbe*2+1];
+				draw_it();
+			});
+			var backg = document.getElementById('background');
+			backg.addEventListener('change', function() {
+				var foreg = document.getElementById('foreground');				  
+				document.getElementById('inverted').checked=false;
+				drawcols[3] = backg.value;
+				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
+				drawcols[0] = foreg.value;
+				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
+				draw_it();
+			});
+			var foreg = document.getElementById('foreground');
+			foreg.addEventListener('change', function() {
+				var backg = document.getElementById('background');				  
+				document.getElementById('inverted').checked=false;
+				drawcols[3] = backg.value;
+				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
+				drawcols[0] = foreg.value;
+				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
+				draw_it();
+			});
+			var nun = document.getElementById('inverted');
+			nun.addEventListener('change', function() {
+				draw_it();
+			});
+ 			
+			function draw_it() {
+			
+					//calc inbetween
+					
+				   for (var stelle = 0; stelle < 4; stelle++) {
+				        steps[stelle] = (parseInt(drawcols[0].charAt(stelle + 1),16) - parseInt(drawcols[3].charAt(stelle + 1),16)) / 5 /3 ;
+				        console.log(steps[stelle].toString(16));
+				    }
+				 
+				    drawcols[1] = "#" + dechex(parseInt(parseInt(drawcols[3].charAt(1),16) + parseInt(steps[0] * 2) * 5));
+				    drawcols[1] = drawcols[1].concat(dechex(parseInt(parseInt(drawcols[3].charAt(2),16) + parseInt(steps[1] * 2) * 5)));
+				    drawcols[1] = drawcols[1].concat(dechex(parseInt(parseInt(drawcols[3].charAt(3),16) + parseInt(steps[2] * 2) * 5)));
+				
+				    drawcols[2] = "#" + dechex(parseInt(parseInt(drawcols[3].charAt(1),16) + parseInt(steps[0]) * 5));
+				    drawcols[2] = drawcols[2].concat(dechex(parseInt(parseInt(drawcols[3].charAt(2),16) + parseInt(steps[1]) * 5)));
+				    drawcols[2] = drawcols[2].concat(dechex(parseInt(parseInt(drawcols[3].charAt(3),16) + parseInt(steps[2]) * 5)));
+				
+					// draw
+					var c2 = document.getElementById("Canvas2");
+					var c2_context = c2.getContext("2d");
+					
+					var nun = document.getElementById('inverted');				
+					if (nun.checked) {
+						for(var t=0;t<4;t++){
+							c2_context.fillStyle = drawcols[t];
+							c2_context.fillRect(t*10, t*10, 100-(t*20), 100-(t*20));	
+						}
+					} else {
+						for(var t=0;t<4;t++){
+							c2_context.fillStyle = drawcols[3-t];
+							c2_context.fillRect(t*10, t*10, 100-(t*20), 100-(t*20));	
+						}
+					}
+						
+//					var backgroundColor = document.getElementById('background');
+ //   					var backgroundColorPicker = document.getElementById('background');
+//					$('#background').SetColor(drawcols[0].charAt(1) + drawcols[0].charAt(1) + drawcols[0].charAt(2) + drawcols[0].charAt(2) + drawcols[0].charAt(3) + drawcols[0].charAt(3));
+//					backgroundColor.value= '#' + drawcols[0].charAt(1) + drawcols[0].charAt(1) + drawcols[0].charAt(2) + drawcols[0].charAt(2) + drawcols[0].charAt(3) + drawcols[0].charAt(3);
+//					$('#background').value= '#' + drawcols[0].charAt(1) + drawcols[0].charAt(1) + drawcols[0].charAt(2) + drawcols[0].charAt(2) + drawcols[0].charAt(3) + drawcols[0].charAt(3);
+//					$('#background').trigger('change');
+					
+				}
+			
+			function getConfigData() {
+				//    var backgroundColorPicker = document.getElementById('background_color_picker');
+				var inverted = document.getElementById('inverted');
+				if(inverted.checked){one=1;} else {one=0;}
+				if(twelvehr.checked){two=1;} else {two=0;}
+				if(showdate.checked){three=1;} else {three=0;}
+			  
+				var options = {
+				  'colour': aktfarbe,
+				  'inverted': one,
+				  'twelvehr': two,
+				  'showdate': three
+				};
+			 
+				// Save for next launch
+				localStorage['colour'] = options['colour'];
+				localStorage['inverted'] = options['inverted'];
+				localStorage['twelvehr'] = options['twelvehr'];
+				localStorage['showdate'] = options['showdate'];
+				
+				console.log('Got options: ' + JSON.stringify(options));
+				return options;
+			}
+			  
+			function getQueryParam(variable, defaultValue) {
+				var query = location.search.substring(1);
+				var vars = query.split('&');
+				for (var i = 0; i < vars.length; i++) {
+					var pair = vars[i].split('=');
+					if (pair[0] === variable) {
+						return decodeURIComponent(pair[1]);
+					}
+				}
+				return defaultValue || false;
+			}
+			 
+			var submitButton = document.getElementById('submit_button');
+			submitButton.addEventListener('click', function() {
+				console.log('Submit');
+				// Set the return URL depending on the runtime environment
+				var return_to = getQueryParam('return_to', 'pebblejs://close#');
+				document.location = return_to + encodeURIComponent(JSON.stringify(getConfigData()));
+			});
+			
+			(function() {
+				// var backgroundColorPicker = document.getElementById('background_color_picker');
+				var inverted = document.getElementById('inverted');
+				// Load any previously saved configuration, if available
+				if(localStorage['inverted']) {
+					aktfarbe = JSON.parse(localStorage['colour']);
+					console.log("got saved vars %d", aktfarbe);
+					inverted.checked = JSON.parse(localStorage['inverted']);
+					twelvehr.checked = JSON.parse(localStorage['twelvehr']);
+					showdate.checked = JSON.parse(localStorage['showdate']);
+				}
+			})();
+	  
+			draw_it();
+			document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";   
+		</script>
+	</body>
 </html>
+
