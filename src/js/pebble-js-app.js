@@ -3,7 +3,7 @@ Pebble.addEventListener('ready', function() {
 });
 
 Pebble.addEventListener('showConfiguration', function() {
-  var url = 'https://cdn.rawgit.com/Obsouleet/PWatch/master/config/index.html';
+  var url = 'https://rawgit.com/Obsouleet/Stymple/master/config/Stymple4.html';
   console.log('Showing configuration page: ' + url);
 
   Pebble.openURL(url);
@@ -13,16 +13,15 @@ Pebble.addEventListener('webviewclosed', function(e) {
   var configData = JSON.parse(decodeURIComponent(e.response));
   console.log('Configuration page returned: ' + JSON.stringify(configData));
 
-  var backgroundColor = configData['background_color'];
+//  var backgroundColor = configData['background_color'];
 
-  var dict = {};
-  if(configData['high_contrast'] === true) {
-    dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'];
-  } else {
-    dict['KEY_COLOR_RED'] = parseInt(backgroundColor.substring(2, 4), 16);
-    dict['KEY_COLOR_GREEN'] = parseInt(backgroundColor.substring(4, 6), 16);
-    dict['KEY_COLOR_BLUE'] = parseInt(backgroundColor.substring(6), 16);
-  }
+  var dict = {
+	"KEY_COLOR_NR":parseInt(configData['colour']),
+		"KEY_INVERTED":parseInt(configData['inverted']),
+	"KEY_TWELVEHR":parseInt(configData['twelvehr']),
+	"KEY_SHOWDATE":parseInt(configData['showdate'])
+	};
+	
 
   // Send to watchapp
   Pebble.sendAppMessage(dict, function() {

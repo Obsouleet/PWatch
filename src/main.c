@@ -1,20 +1,17 @@
 #include "pebble.h"
  
-#define TAP_TIME 3000	
-#define EDIT_MODE_DURATION 3000
-#define TRIPPLE_TAP_TIME 8000
-#define THROTTLE_TIME 100
-	
-#define KEY_COLOR_NR 0
-#define KEY_INVERTED 0
-#define KEY_SHOW_DATE 0
-	
-static int director = 0; 
-static int colourcounter=0*4;  
-static int colsetno=3;
-static int incer=0;
-static int ctr=0;
 
+#define KEY_COLOR_NR 0
+#define KEY_INVERTED 1
+#define KEY_TWELVEHR 2	
+#define KEY_SHOWDATE 3
+
+static bool directbool = false;
+static int director = 0; 
+static int colourptr = 0;  
+static int incer =0 ;
+static bool twelvehr = false;
+static bool showdate =false;
 
 static Window *s_main_window;
 
@@ -44,7 +41,43 @@ static GColor Textcolour;
 // Placeholders
 static void redaw_entire_screen();
 //  BLIT DIGIT ------------------------------------------------------------------------------------------------------------------------------
+static void inbox_received_handler(DictionaryIterator *iter, void *context) {
+  Tuple *c_t = dict_find(iter, KEY_COLOR_NR);
+  Tuple *director_t = dict_find(iter, KEY_INVERTED);
+  Tuple *twelve_t = dict_find(iter, KEY_TWELVEHR);
+  Tuple *show_t = dict_find(iter, KEY_SHOWDATE);
+	
+	if (c_t != 0) {
+		colourptr = c_t->value->int16;
+  //  persist_write_int(KEY_COLOR_NR, colourptr);
+//		APP_LOG(APP_LOG_LEVEL_DEBUG, "Colour: %d", colourptr);
+	}
 
+  if (director_t) {
+		//var test=director_t->value->cstring;
+	//	if (director_t->value->cstring=='true'){director=1;} else {director=0;}
+     director= director_t->value->int8;
+	//if (directbool==true) {director=1;} else {director=0;} 
+	persist_write_int(KEY_INVERTED, director);
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Inverted: %d", director);
+ }
+	
+	
+	if (twelve_t) {
+		twelvehr = twelve_t->value->int8;
+//		persist_write_bool(KEY_TWELVEHR, twelvehr);
+//		if (twelvehrd==1){twelvehd=true;} else {twelvehd=false;}
+//		APP_LOG(APP_LOG_LEVEL_DEBUG, "twelvehr: %d", twelvehr);
+	}	
+	
+	if (show_t) {
+		showdate = show_t->value->int8;		
+//	 	persist_write_bool(KEY_SHOWDATE, showdate);
+//				APP_LOG(APP_LOG_LEVEL_DEBUG, "showdate: %d", showdate);
+	}
+	
+  redaw_entire_screen();
+}
 static void blit_digit(void *bitmap_layer, int image) {
                 switch (image)
 
@@ -88,14 +121,15 @@ static void blit_digit(void *bitmap_layer, int image) {
 
 // PRINT_STATUS -----------------------------------------------------------------------------------------------------------------------------
 
-static void print_status(Window *window) {                                                  //DATUM UND AKKU AKTUALISIEREN
- 
+static void battery_handler(BatteryChargeState charge_state)  {                                                  //DATUM UND AKKU AKTUALISIEREN
+ //		APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery: %d", charge_state.charge_percent);
 		// Battery        
 		static char battery_buffer[6];
 
-		BatteryChargeState charge_state = battery_state_service_peek();
-		if (charge_state.is_charging) {
-									snprintf(battery_buffer, sizeof(battery_buffer), "ZzZz");
+//		BatteryChargeState charge_state = battery_state_service_peek();
+
+	if (charge_state.is_charging) {
+									snprintf(battery_buffer, sizeof(battery_buffer), "Zzz");
 		} else {
 									snprintf(battery_buffer, sizeof(battery_buffer), "%d%%", charge_state.charge_percent);
 		}
@@ -105,8 +139,10 @@ static void print_status(Window *window) {                                      
 		struct tm *tick_time = localtime(&temp);
 
 		static char date_buffer[30]= "00:00";
-		strftime(date_buffer, 22, "%a %d.%m.%Y", tick_time);
-		strcat(strcat(date_buffer, " - "),battery_buffer);
+
+	   if (twelvehr) {strftime(date_buffer, 22, "%a %m/%d/%Y", tick_time);} else {strftime(date_buffer, 22, "%a %d.%m.%Y", tick_time);}	
+	
+		strcat(strcat(date_buffer, "  "),battery_buffer);
 
 		// Update time TextLayer
 		text_layer_set_text_color(status_layer, Textcolour);
@@ -120,31 +156,30 @@ static void update_time() {                                                     
   time_t temp = time(NULL);
   struct tm *tick_time = localtime(&temp);
  
-   // Display the time on the Pebble
-
   int hour = tick_time->tm_hour;
   int minute = tick_time->tm_min;
-                
+   
   if(minute == 0) {
   
             // NEUE STUNDE
                
-           blit_digit(links_unten_layer, 0 );                                          //Minute1
-           blit_digit(rechts_unten_layer, 0 );                                         //Minute2
-  
-           if((hour % 10) == 0) {
-                     blit_digit(links_oben_layer, hour / 10 );                           //Stunde1
-                     blit_digit(rechts_oben_layer, hour % 10 );                          //Stunde2
-           } else {
-                     blit_digit(rechts_oben_layer, hour % 10 );                          //Stunde2                                         
-           }
+          blit_digit(links_unten_layer, 0 );                                          			//Minute1
+          blit_digit(rechts_unten_layer, 0 );     																					//Minute2
+          if (twelvehr && hour==13) {blit_digit(links_oben_layer, 0);}
+					if (twelvehr && hour>12) {hour-=12;}																							//12-Stunden-Format                    																			
+		
+					if(( hour % 10)== 0) {blit_digit(links_oben_layer, hour / 10 ); }                 //Stunde1
+          blit_digit(rechts_oben_layer, hour % 10 );                          							//Stunde2
  
+					if (showdate && hour == 0) {battery_handler(battery_state_service_peek());}			  //neuer Tag - Datum anzeigen
+				
   } else {
             // NEUE MINUTE
     
-           if((minute % 10) == 0) {blit_digit(links_unten_layer, minute / 10);}        // Minute1
-           blit_digit(rechts_unten_layer, (minute % 10));                              // Minute2
-  }
+           if((minute % 10) == 0) {blit_digit(links_unten_layer, minute / 10);}        			// Minute1
+           blit_digit(rechts_unten_layer, (minute % 10));                              			// Minute2
+	
+	}
 }
 
 // TICK_HANDLER ------------------------------------------------------------------------------------------------------------------------------------
@@ -192,20 +227,45 @@ static void main_window_load(Window *window) {
  
   // Status Text Layer
 	
-  status_layer = text_layer_create(GRect(7, 76, 130, 17));
+  status_layer = text_layer_create(GRect(4, 72, 139, 19));
   text_layer_set_background_color(status_layer, GColorClear);
-  text_layer_set_font(status_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+  text_layer_set_font(status_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
   text_layer_set_text_alignment(status_layer, GTextAlignmentCenter);
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(status_layer));
 	
-  redaw_entire_screen();
-	
+	redaw_entire_screen();
 }
  
 // REDRAW WINDOW - DIRTY DIANA ----------------------------------------------------------------------------------------------------------
 
 static void redaw_entire_screen(){ 
-	
+ GColor farben[]={	GColorBulgarianRose, GColorRoseVale, GColorMelon, GColorWhite, 
+GColorImperialPurple, GColorPurpureus, GColorRichBrilliantLavender, GColorWhite, 
+GColorDarkCandyAppleRed, GColorSunsetOrange, GColorMelon, GColorWhite, 
+GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBulgarianRose, GColorBlack, 
+GColorRed, GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBlack,
+GColorBlueMoon, GColorPictonBlue, GColorCeleste, GColorWhite, 
+GColorDukeBlue, GColorVeryLightBlue, GColorBabyBlueEyes, GColorWhite, 
+GColorMidnightGreen, GColorCadetBlue, GColorCeleste, GColorWhite, 
+GColorOxfordBlue, GColorLiberty, GColorBabyBlueEyes, GColorWhite, 
+GColorBlueMoon, GColorDukeBlue, GColorOxfordBlue, GColorBlack, 
+GColorDarkGreen, GColorMayGreen, GColorMelon, GColorWhite, 
+GColorIslamicGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
+GColorArmyGreen, GColorBrass, GColorPastelYellow, GColorWhite, 
+GColorGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
+GColorGreen, GColorIslamicGreen, GColorDarkGreen, GColorBlack, 
+GColorMediumSpringGreen, GColorJaegerGreen, GColorDarkGreen, GColorBlack,
+GColorSunsetOrange, GColorMelon, GColorCeleste, GColorElectricBlue, 
+GColorMediumSpringGreen, GColorScreaminGreen, GColorSpringBud, GColorYellow, 
+GColorBlueMoon, GColorCadetBlue, GColorInchworm, GColorYellow, 
+GColorYellow, GColorChromeYellow, GColorOrange, GColorRed, 
+GColorMidnightGreen, GColorDarkGray, GColorBrass, GColorIcterine, 
+GColorSunsetOrange, GColorSunsetOrange, GColorRajah, GColorYellow,
+GColorBlack, GColorDarkGray, GColorLightGray, GColorWhite, 
+GColorWindsorTan, GColorRajah, GColorIcterine, GColorPastelYellow, 
+GColorWindsorTan, GColorRajah, GColorPastelYellow, GColorWhite, 
+GColorWindsorTan, GColorArmyGreen, GColorDarkGreen, GColorBlack, 
+GColorDarkGray, GColorLightGray, GColorLightGray, GColorWhite}; 
 	// All Images
 	
   GColor *current_palette0 = gbitmap_get_palette(IMAGE_0);
@@ -224,68 +284,22 @@ static void redaw_entire_screen(){
 		 //  Color Sets
 
 
-GColor reds[]={	GColorBulgarianRose, GColorRoseVale, GColorMelon, GColorWhite, 
-GColorImperialPurple, GColorPurpureus, GColorRichBrilliantLavender, GColorWhite, 
-GColorDarkCandyAppleRed, GColorSunsetOrange, GColorMelon, GColorWhite, 
-GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBulgarianRose, GColorBlack, 
-GColorRed, GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBlack};
-  
-GColor blues[]={GColorBlueMoon, GColorPictonBlue, GColorCeleste, GColorWhite, 
-GColorDukeBlue, GColorVeryLightBlue, GColorBabyBlueEyes, GColorWhite, 
-GColorMidnightGreen, GColorCadetBlue, GColorCeleste, GColorWhite, 
-GColorOxfordBlue, GColorLiberty, GColorBabyBlueEyes, GColorWhite, 
-GColorBlueMoon, GColorDukeBlue, GColorOxfordBlue, GColorBlack, 
-GColorBlueMoon, GColorDukeBlue, GColorOxfordBlue, GColorBlack};
-					
-GColor greens[]={GColorDarkGreen, GColorMayGreen, GColorMelon, GColorWhite, 
-GColorIslamicGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
-GColorArmyGreen, GColorBrass, GColorPastelYellow, GColorWhite, 
-GColorGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
-GColorGreen, GColorIslamicGreen, GColorDarkGreen, GColorBlack, 
-GColorMediumSpringGreen, GColorJaegerGreen, GColorDarkGreen, GColorBlack };
-
-GColor others[]={GColorSunsetOrange, GColorMelon, GColorCeleste, GColorElectricBlue, 
-GColorMediumSpringGreen, GColorScreaminGreen, GColorSpringBud, GColorYellow, 
-GColorBlueMoon, GColorCadetBlue, GColorInchworm, GColorYellow, 
-GColorYellow, GColorChromeYellow, GColorOrange, GColorRed, 
-GColorMidnightGreen, GColorDarkGray, GColorBrass, GColorIcterine, 
-GColorSunsetOrange, GColorSunsetOrange, GColorRajah, GColorYellow};
- 
-GColor darks[]={GColorBlack, GColorDarkGray, GColorLightGray, GColorWhite, 
-GColorWindsorTan, GColorRajah, GColorIcterine, GColorPastelYellow, 
-GColorWindsorTan, GColorRajah, GColorPastelYellow, GColorWhite, 
-GColorWindsorTan, GColorArmyGreen, GColorDarkGreen, GColorBlack, 
-GColorDarkGray, GColorLightGray, GColorLightGray, GColorWhite}; 
-
-GColor *Colsets[]={reds,blues,greens,darks,others};
-
-int laengen[]={5,6,6,5,6};																																						// array lenghts of colorsets
-	
 		
 	for(int pals=0;pals<11;pals++){                                                                                                         // walk through all images of the project
-
-			incer=0; 																																																														// PURE MAGIC !!
-
-			for(int i=(colourcounter+(3*director));i!=(colourcounter+abs((4*director)-4)-director);i=(i+((director-1+director))*-1)) {          // up- or down the colour array 
-				Paletten[pals][incer]=Colsets[colsetno][i];                                                                                         
+		incer=0; 
+			for(int i=(colourptr*4+(3*director));i!=(colourptr*4+abs((4*director)-4)-director);i=(i+((director-1+director))*-1)) {          		// up- or down the colour array depending on director
+				Paletten[pals][incer]=farben[i];  
 				incer++;
 			}
 	}  
-	
-
-	if (director==1){
-				director = 0;                                       										// change direction
-				colourcounter=colourcounter + 4;                    										// next colourset
-				if(colourcounter>(laengen[colsetno]-1)*4){colourcounter=0;}             // reset Colourcycle
-	}  else {
-				director = 1;                                       										// change direction
-	}
 	 
 	time_t temp = time(NULL);
 	struct tm *tick_time = localtime(&temp);
 	int minute = tick_time->tm_min;
 	int hour = tick_time->tm_hour;
-		
+	
+	 if (twelvehr && hour>12) {hour-=12;}																					//12-Stunden-Format
+	
 	blit_digit(links_oben_layer, hour / 10 );                   
 	blit_digit(rechts_oben_layer, hour % 10 );
 	blit_digit(links_unten_layer, minute / 10);                             
@@ -293,6 +307,12 @@ int laengen[]={5,6,6,5,6};																																						// array lenghts
 	window_set_background_color(s_main_window, Paletten[0][0]);
 	Textcolour=Paletten[0][0];
 
+	if (showdate) {																															//Datum anzeigen	
+						battery_handler(battery_state_service_peek());
+	} else {
+						text_layer_set_text(status_layer,"");
+	}																		
+									
 }
 
 // SYSTEM RELATED -----------------------------------------------------------------------------------------------------------------------
@@ -319,21 +339,56 @@ static void main_window_unload(Window *window) {
  
 
 static void init() {
+	
+		colourptr = persist_exists(KEY_COLOR_NR) ? persist_read_int(KEY_COLOR_NR) : 1 ;
+//		if (persist_exists(KEY_COLOR_NR)) {
+ // 		  colourptr = persist_read_int(KEY_COLOR_NR);
+//   APP_LOG(APP_LOG_LEVEL_DEBUG,"loaded color: %d", colourptr);
+//   	}
+	director=persist_exists(KEY_INVERTED) ? persist_read_int(KEY_INVERTED) : 0 ;
+//		if (persist_exists(KEY_INVERTED)) {
+ //   		director = persist_read_int(KEY_INVERTED); }
+
+	twelvehr=persist_exists(KEY_TWELVEHR) ? persist_read_bool(KEY_TWELVEHR) : false ;
+//	if (persist_exists(KEY_TWELVEHR)) {
+//  	  twelvehr = persist_read_bool(KEY_TWELVEHR);
+//	}
+
+	showdate=persist_exists(KEY_SHOWDATE) ? persist_read_bool(KEY_SHOWDATE) : false ;
+	
+//	if (persist_exists(KEY_SHOWDATE)) {
+// 		showdate = persist_read_bool(KEY_SHOWDATE);
+//	}
+	
 		s_main_window = window_create();
-//		window_set_fullscreen(s_main_window, true);
-		window_set_background_color(s_main_window, GColorBlack);
-//		accel_tap_service_subscribe(tap_handler);
+//		window_set_background_color(s_main_window, GColorBlack);
 		tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+		
+		battery_state_service_subscribe(battery_handler);
+	
+	
+
+		
 		window_set_window_handlers(s_main_window, (WindowHandlers) {
 				.load = main_window_load,
 				.unload = main_window_unload,
 		});
 		window_stack_push(s_main_window, true);
+		app_message_register_inbox_received(inbox_received_handler);
+  	app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+	
 }
  
 static void deinit() {
- 	 window_destroy(s_main_window);
-   accel_tap_service_unsubscribe();
+	
+	persist_write_int(KEY_COLOR_NR, colourptr);
+	persist_write_int(KEY_INVERTED, director);
+	persist_write_bool(KEY_TWELVEHR, twelvehr);
+	persist_write_bool(KEY_SHOWDATE, showdate);
+	
+ 	window_destroy(s_main_window);
+	battery_state_service_unsubscribe();
+	tick_timer_service_unsubscribe();
 }
  
 int main(void) {
