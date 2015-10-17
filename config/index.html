@@ -255,14 +255,6 @@ function dechex(number) {
 							c2_context.fillRect(t*10, t*10, 100-(t*20), 100-(t*20));	
 						}
 					}
-						
-//					var backgroundColor = document.getElementById('background');
- //   					var backgroundColorPicker = document.getElementById('background');
-//					$('#background').SetColor(drawcols[0].charAt(1) + drawcols[0].charAt(1) + drawcols[0].charAt(2) + drawcols[0].charAt(2) + drawcols[0].charAt(3) + drawcols[0].charAt(3));
-//					backgroundColor.value= '#' + drawcols[0].charAt(1) + drawcols[0].charAt(1) + drawcols[0].charAt(2) + drawcols[0].charAt(2) + drawcols[0].charAt(3) + drawcols[0].charAt(3);
-//					$('#background').value= '#' + drawcols[0].charAt(1) + drawcols[0].charAt(1) + drawcols[0].charAt(2) + drawcols[0].charAt(2) + drawcols[0].charAt(3) + drawcols[0].charAt(3);
-//					$('#background').trigger('change');
-					
 				}
 			
 			function getConfigData() {
@@ -276,7 +268,11 @@ function dechex(number) {
 				  'colour': aktfarbe,
 				  'inverted': one,
 				  'twelvehr': two,
-				  'showdate': three
+				  'showdate': three,
+				  'col0': drawcols[0],
+				  'col1': drawcols[1],
+				  'col2': drawcols[2],
+				  'col3': drawcols[3]
 				};
 			 
 				// Save for next launch
@@ -284,6 +280,10 @@ function dechex(number) {
 				localStorage['inverted'] = options['inverted'];
 				localStorage['twelvehr'] = options['twelvehr'];
 				localStorage['showdate'] = options['showdate'];
+				localStorage['col0'] = options['col0'];
+				localStorage['col1'] = options['col1'];
+				localStorage['col2'] = options['col2'];
+				localStorage['col3'] = options['col3'];
 				
 				console.log('Got options: ' + JSON.stringify(options));
 				return options;
@@ -319,6 +319,10 @@ function dechex(number) {
 					inverted.checked = JSON.parse(localStorage['inverted']);
 					twelvehr.checked = JSON.parse(localStorage['twelvehr']);
 					showdate.checked = JSON.parse(localStorage['showdate']);
+					drawcols[0] = JSON.parse(localStorage['col0']);
+					drawcols[1] = JSON.parse(localStorage['col1']);
+					drawcols[2] = JSON.parse(localStorage['col2']);
+					drawcols[3] = JSON.parse(localStorage['col3']);
 				}
 			})();
 	  
