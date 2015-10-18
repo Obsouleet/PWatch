@@ -119,23 +119,22 @@
 		<script>
 		
 function dechex(number) {
-  //  discuss at: http://phpjs.org/functions/dechex/
-  // original by: Philippe Baumann
-  // bugfixed by: Onno Marsman
-  // improved by: http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
-  //    input by: pilus
-  //   example 1: dechex(10);
-  //   returns 1: 'a'
-  //   example 2: dechex(47);
-  //   returns 2: '2f'
-  //   example 3: dechex(-1415723993);
-  //   returns 3: 'ab9dc427'
   if (number < 0) {
     number = 0xFFFFFFFF + number + 1;
   }
   return parseInt(number, 10)
     .toString(16);
 }
+
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
 		
 			var aktfarbe=0;
 			var gg=0;
@@ -357,10 +356,10 @@ function dechex(number) {
 					twelvehr.checked = JSON.parse(localStorage['twelvehr']);
 					showdate.checked = JSON.parse(localStorage['showdate']);
 
-					drawcols[0] = '#' + dechex(JSON.parse(localStorage['col00'])) + dechex(JSON.parse(localStorage['col01'])) + dechex(JSON.parse(localStorage['col02']));
-					drawcols[1] = '#' + dechex(JSON.parse(localStorage['col10'])) + dechex(JSON.parse(localStorage['col11'])) + dechex(JSON.parse(localStorage['col12']));
-					drawcols[2] = '#' + dechex(JSON.parse(localStorage['col20'])) + dechex(JSON.parse(localStorage['col21'])) + dechex(JSON.parse(localStorage['col22']));
-					drawcols[3] = '#' + dechex(JSON.parse(localStorage['col30'])) + dechex(JSON.parse(localStorage['col31'])) + dechex(JSON.parse(localStorage['col32']));
+					drawcols[0] = rgbToHex(JSON.parse(localStorage['col00']) ,JSON.parse(localStorage['col01']), JSON.parse(localStorage['col02']));
+					drawcols[1] = rgbToHex(JSON.parse(localStorage['col10']) ,JSON.parse(localStorage['col11']), JSON.parse(localStorage['col12']));
+					drawcols[2] = rgbToHex(JSON.parse(localStorage['col20']) ,JSON.parse(localStorage['col21']), JSON.parse(localStorage['col22']));
+					drawcols[2] = rgbToHex(JSON.parse(localStorage['col30']) ,JSON.parse(localStorage['col31']), JSON.parse(localStorage['col32']));
 					
 					var foreg = document.getElementById('foreground');	
 					foreg.value=drawcols[0];
