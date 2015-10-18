@@ -358,8 +358,8 @@ function dechex(number) {
 					showdate.checked = JSON.parse(localStorage['showdate']);
 
 					drawcols[0] = '#' + dechex(JSON.parse(localStorage['col00'])) + dechex(JSON.parse(localStorage['col01'])) + dechex(JSON.parse(localStorage['col02']));
-					drawcols[1] = '#' + dechex(JSON.parse(localStorage['col10'])).charAt(1) + dechex(JSON.parse(localStorage['col11'])).charAt(1) + dechex(JSON.parse(localStorage['col12'])).charAt(1);
-					drawcols[2] = '#' + dechex(JSON.parse(localStorage['col20'])).charAt(1) + dechex(JSON.parse(localStorage['col21'])).charAt(1) + dechex(JSON.parse(localStorage['col22'])).charAt(1);
+					drawcols[1] = '#' + dechex(JSON.parse(localStorage['col10'])) + dechex(JSON.parse(localStorage['col11'])) + dechex(JSON.parse(localStorage['col12']));
+					drawcols[2] = '#' + dechex(JSON.parse(localStorage['col20'])) + dechex(JSON.parse(localStorage['col21'])) + dechex(JSON.parse(localStorage['col22']));
 					drawcols[3] = '#' + dechex(JSON.parse(localStorage['col30'])) + dechex(JSON.parse(localStorage['col31'])) + dechex(JSON.parse(localStorage['col32']));
 					
 					var foreg = document.getElementById('foreground');	
@@ -368,6 +368,8 @@ function dechex(number) {
 					backg.value=drawcols[3];
 					
 					drawcols[0]=drawcols[0].charAt(1) + drawcols[0].charAt(2) + drawcols[0].charAt(4) + drawcols[0].charAt(6)
+					drawcols[1]=drawcols[1].charAt(1) + drawcols[1].charAt(2) + drawcols[1].charAt(4) + drawcols[1].charAt(6)
+					drawcols[2]=drawcols[2].charAt(1) + drawcols[2].charAt(2) + drawcols[2].charAt(4) + drawcols[2].charAt(6)
 					drawcols[3]=drawcols[3].charAt(1) + drawcols[3].charAt(2) + drawcols[3].charAt(4) + drawcols[3].charAt(6)
 				}
 			})();
