@@ -218,6 +218,14 @@ function rgbToHex(r, g, b) {
 			});
 			var nun = document.getElementById('inverted');
 			nun.addEventListener('change', function() {
+				var one=drawcols[0];
+				var two=drawcols[1];
+				var three=drawcols[2];
+				var four=drawcols[3];
+				drawcols[0]=four;
+				drawcols[1]=three;
+				drawcols[2]=two;
+				drawcols[3]=one;
 				draw_it();
 			});
  			
@@ -225,36 +233,27 @@ function rgbToHex(r, g, b) {
 			
 					//calc inbetween
 					
-				   for (var stelle = 0; stelle < 3; stelle++) {
-				        steps[stelle] = (parseInt(drawcols[0].charAt(stelle + 1),16) - parseInt(drawcols[3].charAt(stelle + 1),16)) / 5 /3 ;
-				        console.log(steps[stelle].toString(16));
-				    }
-				 
-				    drawcols[1] = "#" + dechex(parseInt(parseInt(drawcols[3].charAt(1),16) + parseInt(steps[0] * 2) * 5));
-				    drawcols[1] = drawcols[1].concat(dechex(parseInt(parseInt(drawcols[3].charAt(2),16) + parseInt(steps[1] * 2) * 5)));
-				    drawcols[1] = drawcols[1].concat(dechex(parseInt(parseInt(drawcols[3].charAt(3),16) + parseInt(steps[2] * 2) * 5)));
-				
-				    drawcols[2] = "#" + dechex(parseInt(parseInt(drawcols[3].charAt(1),16) + parseInt(steps[0]) * 5));
-				    drawcols[2] = drawcols[2].concat(dechex(parseInt(parseInt(drawcols[3].charAt(2),16) + parseInt(steps[1]) * 5)));
-				    drawcols[2] = drawcols[2].concat(dechex(parseInt(parseInt(drawcols[3].charAt(3),16) + parseInt(steps[2]) * 5)));
-				
-					// draw
-					var c2 = document.getElementById("Canvas2");
-					var c2_context = c2.getContext("2d");
-					
-					var nun = document.getElementById('inverted');				
-					if (nun.checked) {
-						for(var t=0;t<4;t++){
-							c2_context.fillStyle = drawcols[t];
-							c2_context.fillRect(t*10, t*10, 100-(t*20), 100-(t*20));	
-						}
-					} else {
-						for(var t=0;t<4;t++){
-							c2_context.fillStyle = drawcols[3-t];
-							c2_context.fillRect(t*10, t*10, 100-(t*20), 100-(t*20));	
-						}
-					}
+				for (var stelle = 0; stelle < 3; stelle++) {
+					steps[stelle] = (parseInt(drawcols[0].charAt(stelle + 1),16) - parseInt(drawcols[3].charAt(stelle + 1),16)) / 5 /3 ;
 				}
+				 
+				drawcols[1] = "#" + dechex(parseInt(parseInt(drawcols[3].charAt(1),16) + parseInt(steps[0] * 2) * 5));
+				drawcols[1] = drawcols[1].concat(dechex(parseInt(parseInt(drawcols[3].charAt(2),16) + parseInt(steps[1] * 2) * 5)));
+				drawcols[1] = drawcols[1].concat(dechex(parseInt(parseInt(drawcols[3].charAt(3),16) + parseInt(steps[2] * 2) * 5)));
+				
+				drawcols[2] = "#" + dechex(parseInt(parseInt(drawcols[3].charAt(1),16) + parseInt(steps[0]) * 5));
+				drawcols[2] = drawcols[2].concat(dechex(parseInt(parseInt(drawcols[3].charAt(2),16) + parseInt(steps[1]) * 5)));
+				drawcols[2] = drawcols[2].concat(dechex(parseInt(parseInt(drawcols[3].charAt(3),16) + parseInt(steps[2]) * 5)));
+				
+				// draw
+				var c2 = document.getElementById("Canvas2");
+				var c2_context = c2.getContext("2d");
+	
+				for(var t=0;t<4;t++){
+					c2_context.fillStyle = drawcols[t];
+					c2_context.fillRect(t*10, t*10, 100-(t*20), 100-(t*20));	
+				}
+			}
 			
 			function getConfigData() {
 				//    var backgroundColorPicker = document.getElementById('background_color_picker');
