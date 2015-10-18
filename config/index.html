@@ -358,10 +358,11 @@ function dechex(number) {
 					inverted.checked = JSON.parse(localStorage['inverted']);
 					twelvehr.checked = JSON.parse(localStorage['twelvehr']);
 					showdate.checked = JSON.parse(localStorage['showdate']);
-					drawcols[0] = JSON.parse(localStorage['col0']);
-					drawcols[1] = JSON.parse(localStorage['col1']);
-					drawcols[2] = JSON.parse(localStorage['col2']);
-					drawcols[3] = JSON.parse(localStorage['col3']);
+
+					drawcols[0] = '#' + JSON.parse(localStorage['col00']) + JSON.parse(localStorage['col01']) + JSON.parse(localStorage['col02']);
+					drawcols[1] = '#' + JSON.parse(localStorage['col10']) + JSON.parse(localStorage['col11']) + JSON.parse(localStorage['col12']);
+					drawcols[2] = '#' + JSON.parse(localStorage['col20']) + JSON.parse(localStorage['col21']) + JSON.parse(localStorage['col22']);
+					drawcols[3] = '#' + JSON.parse(localStorage['col30']) + JSON.parse(localStorage['col31']) + JSON.parse(localStorage['col33']);
 				}
 			})();
 	  
