@@ -142,6 +142,29 @@ var Zepto=function(){function L(t){return null==t?String(t):j[S.call(t)]||"objec
                           'ffaaff': 'ecc3eb','ffff00': 'ffeeab','ffff55': 'fff1b5',
                           'ffffaa': 'fff6d3'};
 
+      var mappingNormal = {'000000': '000000','001e41': '000055','004387': '0000aa',
+                          '0068ca': '0000ff','2b4a2c': '005500','27514f': '005555',
+                          '16638d': '0055aa','007dce': '0055ff','5e9860': '00aa00',
+                          '5c9b72': '00aa55','57a5a2': '00aaaa','4cb4db': '00aaff',
+                          '8ee391': '00ff00','8ee69e': '00ff55','8aebc0': '00ffaa',
+                          '84f5f1': '00ffff','4a161b': '550000','482748': '550055',
+                          '40488a': '5500aa','2f6bcc': '5500ff','564e36': '555500',
+                          '545454': '555555','4f6790': '5555aa','4180d0': '5555ff',
+                          '759a64': '55aa00','759d76': '55aa55','71a6a4': '55aaaa',
+                          '69b5dd': '55aaff','9ee594': '55ff00','9de7a0': '55ff55',
+                          '9becc2': '55ffaa','95f6f2': '55ffff','99353f': 'aa0000',
+                          '983e5a': 'aa0055','955694': 'aa00aa','8f74d2': 'aa00ff',
+                          '9d5b4d': 'aa5500','9d6064': 'aa5555','9a7099': 'aa55aa',
+                          '9587d5': 'aa55ff','afa072': 'aaaa00','aea382': 'aaaa55',
+                          'ababab': 'aaaaaa','ffffff': 'ffffff','a7bae2': 'aaaaff',
+                          'c9e89d': 'aaff00','c9eaa7': 'aaff55','c7f0c8': 'aaffaa',
+                          'c3f9f7': 'aaffff','e35462': 'ff0000','e25874': 'ff0055',
+                          'e16aa3': 'ff00aa','de83dc': 'ff00ff','e66e6b': 'ff5500',
+                          'e6727c': 'ff5555','e37fa7': 'ff55aa','e194df': 'ff55ff',
+                          'f1aa86': 'ffaa00','f1ad93': 'ffaa55','efb5b8': 'ffaaaa',
+                          'ecc3eb': 'ffaaff','ffeeab': 'ffff00','fff1b5': 'ffff55',
+                          'fff6d3': 'ffffaa'};
+
       this.each(function() {
         var $color = $(this);
         var $item = $color.parent();
@@ -208,11 +231,23 @@ var Zepto=function(){function L(t){return null==t?String(t):j[S.call(t)]||"objec
           $item.find('.color-box-wrap').toggleClass('show');
         });
 
+        $color.on('change', function(ev) {
+          var value = $(this).val().replace(/^0x/, '').toLowerCase();
+          if(options.sunny) {
+            value = mappingSunny[value];
+          }
+          $valueDisplay.css('background-color', '#' + value);
+        });
+
         $item.find('.color-box.selectable').on('click', function(ev) {
           ev.preventDefault();
 
-          var value = $(this).data('value');
-          $color.val(value);
+          var value = $(this).data('value').toLowerCase();
+          if(options.sunny) {
+            $color.val('0x' + mappingNormal[value.replace(/^0x/, '')]).trigger('change');
+          } else {
+            $color.val(value).trigger('change');
+          }
           $valueDisplay.css('background-color', value.replace(/^0x/, '#'));
           $item.find('.color-box-wrap').removeClass('show');
         })
