@@ -366,10 +366,10 @@ function rgbToHex(r, g, b) {
 					var backg = document.getElementById('background');
 					backg.value=drawcols[3];
 					
-					drawcols[0]=drawcols[0].charAt(0) + drawcols[0].charAt(2) + drawcols[0].charAt(4) + drawcols[0].charAt(6)
-					drawcols[1]=drawcols[1].charAt(0) + drawcols[1].charAt(2) + drawcols[1].charAt(4) + drawcols[1].charAt(6)
-					drawcols[2]=drawcols[2].charAt(0) + drawcols[2].charAt(2) + drawcols[2].charAt(4) + drawcols[2].charAt(6)
-					drawcols[3]=drawcols[3].charAt(0) + drawcols[3].charAt(2) + drawcols[3].charAt(4) + drawcols[3].charAt(6)
+					drawcols[0]='#' + drawcols[0].charAt(2) + drawcols[0].charAt(4) + drawcols[0].charAt(6)
+					drawcols[1]='#' + drawcols[1].charAt(2) + drawcols[1].charAt(4) + drawcols[1].charAt(6)
+					drawcols[2]='#' + drawcols[2].charAt(2) + drawcols[2].charAt(4) + drawcols[2].charAt(6)
+					drawcols[3]='#' + drawcols[3].charAt(2) + drawcols[3].charAt(4) + drawcols[3].charAt(6)
 				}
 			})();
 	  
