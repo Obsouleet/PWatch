@@ -363,7 +363,7 @@ function dechex(number) {
 					drawcols[0] = '#' + dechex(JSON.parse(localStorage['col00'])) + dechex(JSON.parse(localStorage['col01'])) + dechex(JSON.parse(localStorage['col02']));
 					drawcols[1] = '#' + dechex(JSON.parse(localStorage['col10'])).charAt(1) + dechex(JSON.parse(localStorage['col11'])).charAt(1) + dechex(JSON.parse(localStorage['col12'])).charAt(1);
 					drawcols[2] = '#' + dechex(JSON.parse(localStorage['col20'])).charAt(1) + dechex(JSON.parse(localStorage['col21'])).charAt(1) + dechex(JSON.parse(localStorage['col22'])).charAt(1);
-					drawcols[3] = '#' + dechex(JSON.parse(localStorage['col30'])) + dechex(JSON.parse(localStorage['col31'])) + dechex(JSON.parse(localStorage['col33']));
+					drawcols[3] = '#' + dechex(JSON.parse(localStorage['col30'])) + dechex(JSON.parse(localStorage['col31'])) + dechex(JSON.parse(localStorage['col32']));
 					
 					var foreg = document.getElementById('foreground');	
 					foreg.value=drawcols[0];
