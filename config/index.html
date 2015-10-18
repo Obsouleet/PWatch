@@ -225,7 +225,7 @@ function rgbToHex(r, g, b) {
 			
 					//calc inbetween
 					
-				   for (var stelle = 0; stelle < 4; stelle++) {
+				   for (var stelle = 0; stelle < 3; stelle++) {
 				        steps[stelle] = (parseInt(drawcols[0].charAt(stelle + 1),16) - parseInt(drawcols[3].charAt(stelle + 1),16)) / 5 /3 ;
 				        console.log(steps[stelle].toString(16));
 				    }
