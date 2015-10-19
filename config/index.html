@@ -69,7 +69,7 @@
 						<table style="margin-left:auto; margin-right:auto;"> 
 							<tr> 
 								<td style="width:90px; height:50px;"><input id='down_button' type='button' class='item-button' value='<'></td>
-								<td><b id="Counter">Preset 1/27</b></td>
+								<td><div id="Counter">Preset 1/27</div></td>
 								<td style="width:90px; height:50px;"><input id='up_button' type='button' class='item-button' value='>'></td>
 							</tr>
 						</table>
@@ -257,11 +257,17 @@ function rgbToHex(r, g, b) {
 				// draw
 				var c2 = document.getElementById("Canvas2");
 				var c2_context = c2.getContext("2d");
-	
-				for(var t=0;t<4;t++){
-					c2_context.fillStyle = drawcols[t];
-					c2_context.fillRect(t*10, t*10, 100-(t*20), 100-(t*20));	
+				
+				c2_context.fillStyle = drawcols[3];
+				c2_context.fillRect(0, 0, 120, 120);
+					
+				for(var t=3;t<6;t++){
+					c2_context.fillStyle = drawcols[t-3];
+					c2_context.fillRect(t*10, 20, 120-(t*10), 100);	
+					c2_context.fillRect(20, t*10, 100, 120-(t*10));	
 				}
+				c2_context.fillRect(30, 30, 80, 80);	
+
 			}
 			
 			function getConfigData() {
