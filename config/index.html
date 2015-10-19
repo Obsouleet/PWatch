@@ -180,7 +180,7 @@ function rgbToHex(r, g, b) {
 				aktfarbe=aktfarbe+1;
 				if (aktfarbe>26) {aktfarbe=0;}
 				document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";
-				document.getElementById('inverted').checked=false;
+		//		document.getElementById('inverted').checked=false;
 				drawcols[0] = farben[aktfarbe*2];
 				drawcols[3] = farben[aktfarbe*2+1];
 				draw_it();
@@ -191,7 +191,7 @@ function rgbToHex(r, g, b) {
 				aktfarbe=aktfarbe-1;
 				if (aktfarbe<0) {aktfarbe=26;}
 				document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";
-				document.getElementById('inverted').checked=false;
+		//		document.getElementById('inverted').checked=false;
 				drawcols[0] = farben[aktfarbe*2];
 				drawcols[3] = farben[aktfarbe*2+1];
 				draw_it();
@@ -199,7 +199,7 @@ function rgbToHex(r, g, b) {
 			var backg = document.getElementById('background');
 			backg.addEventListener('change', function() {
 				var foreg = document.getElementById('foreground');				  
-				document.getElementById('inverted').checked=false;
+			//	document.getElementById('inverted').checked=false;
 				drawcols[3] = backg.value;
 				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
 				drawcols[0] = foreg.value;
@@ -209,7 +209,7 @@ function rgbToHex(r, g, b) {
 			var foreg = document.getElementById('foreground');
 			foreg.addEventListener('change', function() {
 				var backg = document.getElementById('background');				  
-				document.getElementById('inverted').checked=false;
+		//		document.getElementById('inverted').checked=false;
 				drawcols[3] = backg.value;
 				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
 				drawcols[0] = foreg.value;
