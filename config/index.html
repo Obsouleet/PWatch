@@ -20,7 +20,7 @@
 		</style>
 	</head>
 	<body>
-
+	<h1 class='title'>Colors</h1>
 		<canvas id="Canvas2" width="100" height = "100" style="padding-left: 0;
 						padding-right: 0;
 						margin-left: auto;
@@ -39,16 +39,16 @@
 			</div>
 		</div>
 
-		<h1 class='title'>Colors</h1>
+	
 
 		<div class='item-container'>
-			<div class='item-container-header'>Take One Of The Carefully Selected Presets</div>
+			<div class='item-container-header'>Presets</div>
 				<div class='item-container-content'>
 					<div class='button-container'>
 						<table style="margin-left:auto; margin-right:auto;"> 
 							<tr> 
 								<td style="width:90px; height:50px;"><input id='down_button' type='button' class='item-button' value='<'></td>
-								<td><div id="Counter">Preset 1/27</div></td>
+								<td><div id="Counter">1/27</div></td>
 								<td style="width:90px; height:50px;"><input id='up_button' type='button' class='item-button' value='>'></td>
 							</tr>
 						</table>
@@ -170,7 +170,7 @@ function rgbToHex(r, g, b) {
 				  
 				aktfarbe=aktfarbe+1;
 				if (aktfarbe>26) {aktfarbe=0;}
-				document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";
+				document.getElementById('Counter').innerHTML=  (aktfarbe+1).toString() + "/27";
 				blocker=true;
 				document.getElementById('inverted').checked=false;
 				blocker=false;
@@ -183,7 +183,7 @@ function rgbToHex(r, g, b) {
 								  
 				aktfarbe=aktfarbe-1;
 				if (aktfarbe<0) {aktfarbe=26;}
-				document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";
+				document.getElementById('Counter').innerHTML= (aktfarbe+1).toString() + "/27";
 				blocker=true;
 				document.getElementById('inverted').checked=false;
 				blocker=false;
@@ -376,7 +376,7 @@ function rgbToHex(r, g, b) {
 			})();
 	  
 			draw_it();
-			document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";   
+			document.getElementById('Counter').innerHTML=  (aktfarbe+1).toString() + "/27";   
 		</script>
 	</body>
 </html>
