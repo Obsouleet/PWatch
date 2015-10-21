@@ -193,11 +193,12 @@ function rgbToHex(r, g, b) {
 			});
 			var backg = document.getElementById('background');
 			backg.addEventListener('change', function() {
-				var foreg = document.getElementById('foreground');				  
+				var foreg = document.getElementById('foreground');
+				var back = document.getElementById('background');
 				blocker=true;
 				document.getElementById('inverted').checked=false;
 				blocker=false;
-				drawcols[3] = backg.value;
+				drawcols[3] = back.value;
 				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
 				drawcols[0] = foreg.value;
 				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
@@ -205,13 +206,14 @@ function rgbToHex(r, g, b) {
 			});
 			var foreg = document.getElementById('foreground');
 			foreg.addEventListener('change', function() {
-				var backg = document.getElementById('background');				  
+				var backg = document.getElementById('background');
+				var fore = document.getElementById('foreground');
 				blocker=true;
 				document.getElementById('inverted').checked=false;
 				blocker=false;
 				drawcols[3] = backg.value;
 				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
-				drawcols[0] = foreg.value;
+				drawcols[0] = fore.value;
 				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
 				draw_it();
 			});
@@ -249,9 +251,9 @@ function rgbToHex(r, g, b) {
 				var c2 = document.getElementById("Canvas2");
 				var c2_context = c2.getContext("2d");
 				
-				c2_context.fillStyle = drawcols[3];
-				c2_context.fillRect(0, 0, 100, 100);
 				c2_context.fillStyle = drawcols[0];
+				c2_context.fillRect(0, 0, 100, 100);
+				c2_context.fillStyle = drawcols[3];
 				c2_context.fillRect(30, 30, 40, 40);	
 
 			}
