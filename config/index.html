@@ -198,9 +198,9 @@ function rgbToHex(r, g, b) {
 				blocker=true;
 				document.getElementById('inverted').checked=false;
 				blocker=false;
-				drawcols[3] = back.value;
+				drawcols[3] = foreg.value;
 				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
-				drawcols[0] = foreg.value;
+				drawcols[0] = back.value;
 				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
 				draw_it();
 			});
@@ -211,9 +211,9 @@ function rgbToHex(r, g, b) {
 				blocker=true;
 				document.getElementById('inverted').checked=false;
 				blocker=false;
-				drawcols[3] = backg.value;
+				drawcols[3] = fore.value;
 				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
-				drawcols[0] = fore.value;
+				drawcols[0] = backg.value;
 				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
 				draw_it();
 			});
