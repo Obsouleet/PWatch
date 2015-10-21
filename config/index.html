@@ -193,7 +193,7 @@ function rgbToHex(r, g, b) {
 			});
 			var backg = document.getElementById('background');
 			backg.addEventListener('change', function() {
-				var foreg = document.getElementById('foreground');
+//				var foreg = document.getElementById('foreground');
 //				var back = document.getElementById('background');
 				blocker=true;
 //				document.getElementById('inverted').checked=false;
@@ -364,9 +364,9 @@ function rgbToHex(r, g, b) {
 					drawcols[3] = rgbToHex(JSON.parse(localStorage['col30']) ,JSON.parse(localStorage['col31']), JSON.parse(localStorage['col32']));
 					
 					var foreg = document.getElementById('foreground');	
-					foreg.value=drawcols[0];
+					foreg.value=drawcols[3];
 					var backg = document.getElementById('background');
-					backg.value=drawcols[3];
+					backg.value=drawcols[0];
 					
 					drawcols[0]='#' + drawcols[0].charAt(2) + drawcols[0].charAt(4) + drawcols[0].charAt(6)
 					drawcols[1]='#' + drawcols[1].charAt(2) + drawcols[1].charAt(4) + drawcols[1].charAt(6)
