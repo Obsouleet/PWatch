@@ -9,7 +9,7 @@
 
 		<style>
 		  .title {
-			padding: 10px 10px 0px 10px;
+			padding: 15px 10px 0px 10px;
 			text-transform: uppercase;
 			font-family: 'PT Sans', sans-serif;
 			font-size: 1.2em;
@@ -194,24 +194,24 @@ function rgbToHex(r, g, b) {
 			var backg = document.getElementById('background');
 			backg.addEventListener('change', function() {
 				var foreg = document.getElementById('foreground');
-				var back = document.getElementById('background');
+//				var back = document.getElementById('background');
 				blocker=true;
 //				document.getElementById('inverted').checked=false;
 				blocker=false;
 				drawcols[3] = foreg.value;
 				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
-				drawcols[0] = back.value;
+				drawcols[0] = backg.value;
 				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
 				draw_it();
 			});
 			var foreg = document.getElementById('foreground');
 			foreg.addEventListener('change', function() {
-				var backg = document.getElementById('background');
-				var fore = document.getElementById('foreground');
+//				var backg = document.getElementById('background');
+//				var fore = document.getElementById('foreground');
 				blocker=true;
 //				document.getElementById('inverted').checked=false;
 				blocker=false;
-				drawcols[3] = fore.value;
+				drawcols[3] = foreg.value;
 				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
 				drawcols[0] = backg.value;
 				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
