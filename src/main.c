@@ -1,18 +1,36 @@
 #include "pebble.h"
- 
 
 #define KEY_COLOR_NR 0
 #define KEY_INVERTED 1
 #define KEY_TWELVEHR 2	
 #define KEY_SHOWDATE 3
 
-static bool directbool = false;
-static int director = 0; 
-static int colourptr = 0;  
+#define KEY_COL00 4
+#define KEY_COL01 5
+#define KEY_COL02 6
+
+#define KEY_COL10 7
+#define KEY_COL11 8
+#define KEY_COL12 9
+
+#define KEY_COL20 10
+#define KEY_COL21 11
+#define KEY_COL22 12
+
+#define KEY_COL30 13
+#define KEY_COL31 14
+#define KEY_COL32 15
+
 static int incer =0 ;
 static bool twelvehr = false;
 static bool showdate =false;
 
+static GColor col0;
+static GColor col1;
+static GColor col2;
+static GColor col3;
+
+static char *s_buffer;
 static Window *s_main_window;
 
 static BitmapLayer *links_oben_layer;
@@ -22,7 +40,6 @@ static BitmapLayer *links_unten_layer;
 static BitmapLayer *rechts_unten_layer;
 
 static TextLayer *status_layer;
-
 static GBitmap *IMAGE_0;
 static GBitmap *IMAGE_1;
 static GBitmap *IMAGE_2;
@@ -34,50 +51,109 @@ static GBitmap *IMAGE_7;
 static GBitmap *IMAGE_8;
 static GBitmap *IMAGE_9;
 static GBitmap *IMAGE_BAR;
+static GBitmap *IMAGE_BARNULL;
+
 static GBitmap *V_IMAGE;
 
 static GColor Textcolour; 
+static bool prev_bt_status = false;
 
 // Placeholders
 static void redaw_entire_screen();
+
+
 //  BLIT DIGIT ------------------------------------------------------------------------------------------------------------------------------
 static void inbox_received_handler(DictionaryIterator *iter, void *context) {
-  Tuple *c_t = dict_find(iter, KEY_COLOR_NR);
-  Tuple *director_t = dict_find(iter, KEY_INVERTED);
+
   Tuple *twelve_t = dict_find(iter, KEY_TWELVEHR);
   Tuple *show_t = dict_find(iter, KEY_SHOWDATE);
 	
-	if (c_t != 0) {
-		colourptr = c_t->value->int16;
-  //  persist_write_int(KEY_COLOR_NR, colourptr);
-//		APP_LOG(APP_LOG_LEVEL_DEBUG, "Colour: %d", colourptr);
-	}
+  Tuple *col00_t = dict_find(iter, KEY_COL00);
+  Tuple *col01_t = dict_find(iter, KEY_COL01);
+  Tuple *col02_t = dict_find(iter, KEY_COL02);
 
-  if (director_t) {
-		//var test=director_t->value->cstring;
-	//	if (director_t->value->cstring=='true'){director=1;} else {director=0;}
-     director= director_t->value->int8;
-	//if (directbool==true) {director=1;} else {director=0;} 
-	persist_write_int(KEY_INVERTED, director);
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "Inverted: %d", director);
- }
+  Tuple *col10_t = dict_find(iter, KEY_COL10);
+  Tuple *col11_t = dict_find(iter, KEY_COL11);
+  Tuple *col12_t = dict_find(iter, KEY_COL12);
+
+	Tuple *col20_t = dict_find(iter, KEY_COL20);
+  Tuple *col21_t = dict_find(iter, KEY_COL21);
+  Tuple *col22_t = dict_find(iter, KEY_COL22);
+
+	Tuple *col30_t = dict_find(iter, KEY_COL30);
+  Tuple *col31_t = dict_find(iter, KEY_COL31);
+  Tuple *col32_t = dict_find(iter, KEY_COL32);
 	
+	int red;
+	int green;
+	int blue;
 	
 	if (twelve_t) {
 		twelvehr = twelve_t->value->int8;
-//		persist_write_bool(KEY_TWELVEHR, twelvehr);
-//		if (twelvehrd==1){twelvehd=true;} else {twelvehd=false;}
-//		APP_LOG(APP_LOG_LEVEL_DEBUG, "twelvehr: %d", twelvehr);
 	}	
 	
 	if (show_t) {
 		showdate = show_t->value->int8;		
-//	 	persist_write_bool(KEY_SHOWDATE, showdate);
-//				APP_LOG(APP_LOG_LEVEL_DEBUG, "showdate: %d", showdate);
 	}
+	
+	if (col00_t != 0) {
+		red = col00_t->value->int32;
+		green= col01_t->value->int32;
+		blue=col02_t->value->int32;
+	
+		col0=GColorFromRGB(red, green, blue);
+//		APP_LOG(APP_LOG_LEVEL_DEBUG, "Color0: %d %d %d", red, green, blue);
+	
+	  persist_write_int(KEY_COL00, red);
+    persist_write_int(KEY_COL01, green);
+    persist_write_int(KEY_COL02, blue);
+	}
+	
+	if (col10_t != 0) {
+		red = col10_t->value->int32;
+		green= col11_t->value->int32;
+		blue=col12_t->value->int32;
+	
+		col1=GColorFromRGB(red, green, blue);
+//		APP_LOG(APP_LOG_LEVEL_DEBUG, "Color0: %d %d %d", red, green, blue);
+
+	  persist_write_int(KEY_COL10, red);
+    persist_write_int(KEY_COL11, green);
+    persist_write_int(KEY_COL12, blue);		
+	}
+	
+	if (col20_t != 0) {
+		red = col20_t->value->int32;
+		green= col21_t->value->int32;
+		blue=col22_t->value->int32;
+	
+		col2=GColorFromRGB(red, green, blue);
+//		APP_LOG(APP_LOG_LEVEL_DEBUG, "Color0: %d %d %d", red, green, blue);
+
+	  persist_write_int(KEY_COL20, red);
+    persist_write_int(KEY_COL21, green);
+    persist_write_int(KEY_COL22, blue);
+	}
+	
+	if (col30_t != 0) {
+		red = col30_t->value->int32;
+		green= col31_t->value->int32;
+		blue=col32_t->value->int32;
+	
+		col3=GColorFromRGB(red, green, blue);
+//		APP_LOG(APP_LOG_LEVEL_DEBUG, "Color0: %d %d %d", red, green, blue);
+
+	  persist_write_int(KEY_COL30, red);
+    persist_write_int(KEY_COL31, green);
+    persist_write_int(KEY_COL32, blue);
+}
+
+		persist_write_bool(KEY_TWELVEHR, twelvehr);
+		persist_write_bool(KEY_SHOWDATE, showdate);
 	
   redaw_entire_screen();
 }
+
 static void blit_digit(void *bitmap_layer, int image) {
                 switch (image)
 
@@ -114,6 +190,9 @@ static void blit_digit(void *bitmap_layer, int image) {
                                               break;
                                case 10:
                                                V_IMAGE=IMAGE_BAR;
+																							 break;
+									 						 case 11:
+                                               V_IMAGE=IMAGE_BARNULL;
                 }
 
 							bitmap_layer_set_bitmap(bitmap_layer, V_IMAGE);
@@ -122,33 +201,60 @@ static void blit_digit(void *bitmap_layer, int image) {
 // PRINT_STATUS -----------------------------------------------------------------------------------------------------------------------------
 
 static void battery_handler(BatteryChargeState charge_state)  {                                                  //DATUM UND AKKU AKTUALISIEREN
- //		APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery: %d", charge_state.charge_percent);
-		// Battery        
-		static char battery_buffer[6];
+ if (showdate) {	
+			static char battery_buffer[6];
 
-//		BatteryChargeState charge_state = battery_state_service_peek();
+			if (charge_state.is_charging) {
+											snprintf(battery_buffer, sizeof(battery_buffer), "Zzz");
+				} else {
+											snprintf(battery_buffer, sizeof(battery_buffer), "%d%%", charge_state.charge_percent);
+				}
 
-	if (charge_state.is_charging) {
-									snprintf(battery_buffer, sizeof(battery_buffer), "Zzz");
-		} else {
-									snprintf(battery_buffer, sizeof(battery_buffer), "%d%%", charge_state.charge_percent);
-		}
+				// Date
+				time_t temp = time(NULL);
+				struct tm *tick_time = localtime(&temp);
 
-		// Date
-		time_t temp = time(NULL);
-		struct tm *tick_time = localtime(&temp);
+				static char date_buffer[30]= "00:00";
+	 
+				char *date_format = "%a %x";																							// all supported languages get their format
+			  const	char *current_locale =setlocale(LC_ALL, "");
 
-		static char date_buffer[30]= "00:00";
+	 			if (twelvehr == false && strcmp("en_US", current_locale) == 0) {					// Pebble only knows en_US - typical...
+									date_format= "%a %d/%m/%Y";																			// if not 12 hour format and english this must be britain 
+				}
+	 
+				strftime(date_buffer, 22, date_format, tick_time);
 
-	   if (twelvehr) {strftime(date_buffer, 22, "%a %m/%d/%Y", tick_time);} else {strftime(date_buffer, 22, "%a %d.%m.%Y", tick_time);}	
+	 			strcat(strcat(date_buffer, "  "),battery_buffer);
+
+				// Update time TextLayer
+				
+	 			text_layer_set_text_color(status_layer, Textcolour);
+				text_layer_set_text(status_layer, date_buffer);
+
+ } else {
+					text_layer_set_text(status_layer,"");
+	}												
+}  
+
+void handle_bluetooth( bool connected ) {
 	
-		strcat(strcat(date_buffer, "  "),battery_buffer);
+	if ( prev_bt_status != connected ) {vibes_double_pulse();}
+	
+	if ( connected ) {
+		
+    bitmap_layer_set_bitmap(bar_layer, IMAGE_BAR);
+		Textcolour=col0;
 
-		// Update time TextLayer
-		text_layer_set_text_color(status_layer, Textcolour);
-		text_layer_set_text(status_layer, date_buffer);
+	} else {
+
+    bitmap_layer_set_bitmap(bar_layer, IMAGE_BARNULL);	
+		Textcolour=col3;
+	}
+
+	battery_handler(battery_state_service_peek());
+	prev_bt_status = connected;
 }
-
 // UPDATE_TIME -----------------------------------------------------------------------------------------------------------------------------------
 
 static void update_time() {                                                            // UHRZEIT AKTUALISIEREN
@@ -206,7 +312,8 @@ static void main_window_load(Window *window) {
   IMAGE_8 = gbitmap_create_with_resource(RESOURCE_ID_digit_8);
   IMAGE_9 = gbitmap_create_with_resource(RESOURCE_ID_digit_9);
   IMAGE_BAR = gbitmap_create_with_resource(RESOURCE_ID_bar);
- 
+	IMAGE_BARNULL = gbitmap_create_with_resource(RESOURCE_ID_BARNULL);
+	
   /* Define graphic areas              */
  
   links_oben_layer = bitmap_layer_create(GRect(4, 4, 66, 66));
@@ -239,33 +346,7 @@ static void main_window_load(Window *window) {
 // REDRAW WINDOW - DIRTY DIANA ----------------------------------------------------------------------------------------------------------
 
 static void redaw_entire_screen(){ 
- GColor farben[]={	GColorBulgarianRose, GColorRoseVale, GColorMelon, GColorWhite, 
-GColorImperialPurple, GColorPurpureus, GColorRichBrilliantLavender, GColorWhite, 
-GColorDarkCandyAppleRed, GColorSunsetOrange, GColorMelon, GColorWhite, 
-GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBulgarianRose, GColorBlack, 
-GColorRed, GColorDarkCandyAppleRed, GColorBulgarianRose, GColorBlack,
-GColorBlueMoon, GColorPictonBlue, GColorCeleste, GColorWhite, 
-GColorDukeBlue, GColorVeryLightBlue, GColorBabyBlueEyes, GColorWhite, 
-GColorMidnightGreen, GColorCadetBlue, GColorCeleste, GColorWhite, 
-GColorOxfordBlue, GColorLiberty, GColorBabyBlueEyes, GColorWhite, 
-GColorBlueMoon, GColorDukeBlue, GColorOxfordBlue, GColorBlack, 
-GColorDarkGreen, GColorMayGreen, GColorMelon, GColorWhite, 
-GColorIslamicGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
-GColorArmyGreen, GColorBrass, GColorPastelYellow, GColorWhite, 
-GColorGreen, GColorScreaminGreen, GColorMelon, GColorWhite, 
-GColorGreen, GColorIslamicGreen, GColorDarkGreen, GColorBlack, 
-GColorMediumSpringGreen, GColorJaegerGreen, GColorDarkGreen, GColorBlack,
-GColorSunsetOrange, GColorMelon, GColorCeleste, GColorElectricBlue, 
-GColorMediumSpringGreen, GColorScreaminGreen, GColorSpringBud, GColorYellow, 
-GColorBlueMoon, GColorCadetBlue, GColorInchworm, GColorYellow, 
-GColorYellow, GColorChromeYellow, GColorOrange, GColorRed, 
-GColorMidnightGreen, GColorDarkGray, GColorBrass, GColorIcterine, 
-GColorSunsetOrange, GColorSunsetOrange, GColorRajah, GColorYellow,
-GColorBlack, GColorDarkGray, GColorLightGray, GColorWhite, 
-GColorWindsorTan, GColorRajah, GColorIcterine, GColorPastelYellow, 
-GColorWindsorTan, GColorRajah, GColorPastelYellow, GColorWhite, 
-GColorWindsorTan, GColorArmyGreen, GColorDarkGreen, GColorBlack, 
-GColorDarkGray, GColorLightGray, GColorLightGray, GColorWhite}; 
+
 	// All Images
 	
   GColor *current_palette0 = gbitmap_get_palette(IMAGE_0);
@@ -279,26 +360,25 @@ GColorDarkGray, GColorLightGray, GColorLightGray, GColorWhite};
   GColor *current_palette8 = gbitmap_get_palette(IMAGE_8);
   GColor *current_palette9 = gbitmap_get_palette(IMAGE_9);
   GColor *current_palettebar = gbitmap_get_palette(IMAGE_BAR);
-  GColor *Paletten[]={current_palette0,current_palette1, current_palette2,current_palette3,current_palette4,current_palette5, current_palette6,current_palette7,current_palette8,current_palette9,current_palettebar};
+	GColor *current_palettebarnull = gbitmap_get_palette(IMAGE_BARNULL);
+	
+  GColor *Paletten[]={current_palette0,current_palette1, current_palette2,current_palette3,current_palette4,current_palette5, current_palette6,current_palette7,current_palette8,current_palette9,current_palettebar,current_palettebarnull};
+	GColor Farben[]={col0, col1, col2, col3};
 
-		 //  Color Sets
-
-
+	for(int pals=0; pals<12;pals++){
+		incer=0;
+		for(int i=0; i<4;i++){
+			Paletten[pals][incer]=Farben[i];
+			incer++;
+		}	
+	}
 		
-	for(int pals=0;pals<11;pals++){                                                                                                         // walk through all images of the project
-		incer=0; 
-			for(int i=(colourptr*4+(3*director));i!=(colourptr*4+abs((4*director)-4)-director);i=(i+((director-1+director))*-1)) {          		// up- or down the colour array depending on director
-				Paletten[pals][incer]=farben[i];  
-				incer++;
-			}
-	}  
-	 
 	time_t temp = time(NULL);
 	struct tm *tick_time = localtime(&temp);
 	int minute = tick_time->tm_min;
 	int hour = tick_time->tm_hour;
 	
-	 if (twelvehr && hour>12) {hour-=12;}																					//12-Stunden-Format
+	if (twelvehr && hour>12) {hour-=12;}																					//12-Stunden-Format
 	
 	blit_digit(links_oben_layer, hour / 10 );                   
 	blit_digit(rechts_oben_layer, hour % 10 );
@@ -307,11 +387,8 @@ GColorDarkGray, GColorLightGray, GColorLightGray, GColorWhite};
 	window_set_background_color(s_main_window, Paletten[0][0]);
 	Textcolour=Paletten[0][0];
 
-	if (showdate) {																															//Datum anzeigen	
-						battery_handler(battery_state_service_peek());
-	} else {
-						text_layer_set_text(status_layer,"");
-	}																		
+																																							//Datum anzeigen	
+		handle_bluetooth(bluetooth_connection_service_peek());										// calls battery_handler(battery_state_service_peek());												
 									
 }
 
@@ -336,39 +413,40 @@ static void main_window_unload(Window *window) {
 		gbitmap_destroy(IMAGE_9);
 		gbitmap_destroy(IMAGE_BAR);
 }
- 
 
 static void init() {
 	
-		colourptr = persist_exists(KEY_COLOR_NR) ? persist_read_int(KEY_COLOR_NR) : 1 ;
-//		if (persist_exists(KEY_COLOR_NR)) {
- // 		  colourptr = persist_read_int(KEY_COLOR_NR);
-//   APP_LOG(APP_LOG_LEVEL_DEBUG,"loaded color: %d", colourptr);
-//   	}
-	director=persist_exists(KEY_INVERTED) ? persist_read_int(KEY_INVERTED) : 0 ;
-//		if (persist_exists(KEY_INVERTED)) {
- //   		director = persist_read_int(KEY_INVERTED); }
-
-	twelvehr=persist_exists(KEY_TWELVEHR) ? persist_read_bool(KEY_TWELVEHR) : false ;
-//	if (persist_exists(KEY_TWELVEHR)) {
-//  	  twelvehr = persist_read_bool(KEY_TWELVEHR);
-//	}
-
-	showdate=persist_exists(KEY_SHOWDATE) ? persist_read_bool(KEY_SHOWDATE) : false ;
+	  int red = persist_exists(KEY_COL00) ? persist_read_int(KEY_COL00): 0;
+    int green = persist_exists(KEY_COL01) ? persist_read_int(KEY_COL01) : 0;
+    int blue = persist_exists(KEY_COL02) ? persist_read_int(KEY_COL02) : 0;
+    col0 = GColorFromRGB(red, green, blue);
 	
-//	if (persist_exists(KEY_SHOWDATE)) {
-// 		showdate = persist_read_bool(KEY_SHOWDATE);
-//	}
+	  red = persist_exists(KEY_COL10) ? persist_read_int(KEY_COL10) : 85;
+    green = persist_exists(KEY_COL11) ? persist_read_int(KEY_COL11) : 85;
+    blue = persist_exists(KEY_COL12) ? persist_read_int(KEY_COL12) : 85;
+    col1 = GColorFromRGB(red, green, blue);
+		
+	  red = persist_exists(KEY_COL20) ? persist_read_int(KEY_COL20) : 170;
+    green = persist_exists(KEY_COL21) ? persist_read_int(KEY_COL21) : 170;
+    blue = persist_exists(KEY_COL22) ? persist_read_int(KEY_COL22) : 170;
+    col2 = GColorFromRGB(red, green, blue);
 	
+	  red = persist_exists(KEY_COL30) ? persist_read_int(KEY_COL30) : 255;
+    green = persist_exists(KEY_COL31) ? persist_read_int(KEY_COL31) : 255;
+    blue = persist_exists(KEY_COL32) ? persist_read_int(KEY_COL32) : 255;
+    col3 = GColorFromRGB(red, green, blue);
+	
+		twelvehr=persist_exists(KEY_TWELVEHR) ? persist_read_bool(KEY_TWELVEHR) : false ;
+
+		showdate=persist_exists(KEY_SHOWDATE) ? persist_read_bool(KEY_SHOWDATE) : false ;
+		prev_bt_status=bluetooth_connection_service_peek();
 		s_main_window = window_create();
-//		window_set_background_color(s_main_window, GColorBlack);
+
 		tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
 		
 		battery_state_service_subscribe(battery_handler);
-	
-	
+		bluetooth_connection_service_subscribe(handle_bluetooth);	
 
-		
 		window_set_window_handlers(s_main_window, (WindowHandlers) {
 				.load = main_window_load,
 				.unload = main_window_unload,
@@ -380,15 +458,13 @@ static void init() {
 }
  
 static void deinit() {
-	
-	persist_write_int(KEY_COLOR_NR, colourptr);
-	persist_write_int(KEY_INVERTED, director);
-	persist_write_bool(KEY_TWELVEHR, twelvehr);
-	persist_write_bool(KEY_SHOWDATE, showdate);
+	free(s_buffer);
 	
  	window_destroy(s_main_window);
 	battery_state_service_unsubscribe();
 	tick_timer_service_unsubscribe();
+	bluetooth_connection_service_unsubscribe();
+
 }
  
 int main(void) {

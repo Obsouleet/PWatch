@@ -1,5 +1,17 @@
 {
     "appKeys": {
+        "KEY_COL00": 4,
+        "KEY_COL01": 5,
+        "KEY_COL02": 6,
+        "KEY_COL10": 7,
+        "KEY_COL11": 8,
+        "KEY_COL12": 9,
+        "KEY_COL20": 10,
+        "KEY_COL21": 11,
+        "KEY_COL22": 12,
+        "KEY_COL30": 13,
+        "KEY_COL31": 14,
+        "KEY_COL32": 15,
         "KEY_COLOR_NR": 0,
         "KEY_INVERTED": 1,
         "KEY_SHOWDATE": 3,
@@ -13,6 +25,11 @@
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/barnull.png",
+                "name": "BARNULL",
+                "type": "png"
+            },
             {
                 "file": "images/zwei.png",
                 "name": "digit_2",
@@ -82,7 +99,7 @@
         "basalt"
     ],
     "uuid": "28d03f1d-73ea-4986-810b-6c832fa96158",
-    "versionLabel": "1.55",
+    "versionLabel": "1.75",
     "watchapp": {
         "watchface": true
     }
