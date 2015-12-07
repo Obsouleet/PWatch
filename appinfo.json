@@ -21,10 +21,71 @@
         "configurable"
     ],
     "companyName": "Hendrik Rausch",
-    "longName": "Stymple",
+    "longName": "Stymple 2",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/preview2.png",
+                "menuIcon": true,
+                "name": "preview3",
+                "type": "png"
+            },
+            {
+                "file": "images/7.png",
+                "name": "image_7_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/bar_alt.png",
+                "name": "image_bar_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/91.png",
+                "name": "image_9_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/8.png",
+                "name": "image_8_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/6.png",
+                "name": "image_6_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/5.png",
+                "name": "image_5_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/4.png",
+                "name": "image_4_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/3.png",
+                "name": "image_3_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/2.png",
+                "name": "image_2_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/1.png",
+                "name": "image_1_alt",
+                "type": "png"
+            },
+            {
+                "file": "images/0.png",
+                "name": "image_0_alt",
+                "type": "png"
+            },
             {
                 "file": "images/barnull.png",
                 "name": "BARNULL",
@@ -52,7 +113,6 @@
             },
             {
                 "file": "images/preview1.png",
-                "menuIcon": true,
                 "name": "preview",
                 "type": "png"
             },
@@ -94,12 +154,14 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "Stymple",
+    "shortName": "Stymple 2",
     "targetPlatforms": [
-        "basalt"
+        "aplite",
+        "basalt",
+        "chalk"
     ],
-    "uuid": "28d03f1d-73ea-4986-810b-6c832fa96158",
-    "versionLabel": "1.75",
+    "uuid": "8824223c-997e-4df3-8a6e-ae2a3f11e1b0",
+    "versionLabel": "1.00",
     "watchapp": {
         "watchface": true
     }
