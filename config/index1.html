@@ -132,104 +132,7 @@ function rgbToHex(r, g, b) {
 			var one=0;
 			var two=0;
 			var three=0;
-			var blocker=false;
-			var drawcols= new Array("#FFF", "#AAA", "#555","#000");	
-			var steps = new Array(0,0,0);
-		    var farben = new Array(
-							"#500", "#fff",
-							"#505", "#fff",
-							"#A00", "#fff",
-							"#A00", "#000",
-							"#F00", "#000",
-							"#05F", "#FFF",
-							"#00A", "#FFF",
-							"#055", "#FFF",
-							"#005", "#FFF",
-							"#05F", "#000",
-							"#050", "#FFF",
-							"#0A0", "#FFF",
-							"#550", "#FFF",
-							"#0F0", "#FFF",
-							"#0F0", "#000",
-							"#0FA", "#000",
-							"#F55", "#5FF",
-							"#0FA", "#FF0",
-							"#05F", "#FF0",
-							"#FF0", "#F00",
-							"#055", "#FF5",
-							"#F55", "#FF0",
-							"#000", "#FFF",
-							"#A50", "#FFA",
-							"#A50", "#FFF",
-							"#A50", "#000",
-							"#555", "#FFF");
-		  
-			  // own style
-			var hoch = document.getElementById('up_button');
-			hoch.addEventListener('click', function() {
-				  
-				aktfarbe=aktfarbe+1;
-				if (aktfarbe>26) {aktfarbe=0;}
-				document.getElementById('Counter').innerHTML=  (aktfarbe+1).toString() + "/27";
-				blocker=true;
-				document.getElementById('inverted').checked=false;
-				blocker=false;
-				drawcols[0] = farben[aktfarbe*2];
-				drawcols[3] = farben[aktfarbe*2+1];
-				draw_it();
-			});
-			var runter = document.getElementById('down_button');
-			runter.addEventListener('click', function() {
-								  
-				aktfarbe=aktfarbe-1;
-				if (aktfarbe<0) {aktfarbe=26;}
-				document.getElementById('Counter').innerHTML= (aktfarbe+1).toString() + "/27";
-				blocker=true;
-				document.getElementById('inverted').checked=false;
-				blocker=false;
-				drawcols[0] = farben[aktfarbe*2];
-				drawcols[3] = farben[aktfarbe*2+1];
-				draw_it();
-			});
-			var backg = document.getElementById('background');
-			backg.addEventListener('change', function() {
-//				var foreg = document.getElementById('foreground');
-//				var back = document.getElementById('background');
-				blocker=true;
-//				document.getElementById('inverted').checked=false;
-				blocker=false;
-				drawcols[3] = foreg.value;
-				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
-				drawcols[0] = backg.value;
-				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
-				draw_it();
-			});
-			var foreg = document.getElementById('foreground');
-			foreg.addEventListener('change', function() {
-//				var backg = document.getElementById('background');
-//				var fore = document.getElementById('foreground');
-				blocker=true;
-//				document.getElementById('inverted').checked=false;
-				blocker=false;
-				drawcols[3] = foreg.value;
-				drawcols[3] = '#' + drawcols[3].charAt(3) + drawcols[3].charAt(5) + drawcols[3].charAt(7);
-				drawcols[0] = backg.value;
-				drawcols[0] = '#' + drawcols[0].charAt(3) + drawcols[0].charAt(5) + drawcols[0].charAt(7);
-				draw_it();
-			});
-			var nun = document.getElementById('inverted');
-			nun.addEventListener('change', function() {
-				if(blocker==false) {
-				var one=drawcols[0];
-				var two=drawcols[1];
-				var three=drawcols[2];
-				var four=drawcols[3];
-				drawcols[0]=four;
-				drawcols[1]=three;
-				drawcols[2]=two;
-				drawcols[3]=one;
-				draw_it();}
-			});
+
  			
 			function draw_it() {
 			
@@ -267,62 +170,21 @@ c2_context.fillRect(40,40,20,20);
 				if(twelvehr.checked){two=1;} else {two=0;}
 				if(showdate.checked){three=1;} else {three=0;}
 				
-			  	var col00=parseInt(drawcols[0].charAt(1)+drawcols[0].charAt(1),16);
-			  	var col01=parseInt(drawcols[0].charAt(2)+drawcols[0].charAt(2),16);
-			  	var col02=parseInt(drawcols[0].charAt(3)+drawcols[0].charAt(3),16);
-			  	
-			  	var col10=parseInt(drawcols[1].charAt(1)+drawcols[1].charAt(1),16);
-			  	var col11=parseInt(drawcols[1].charAt(2)+drawcols[1].charAt(2),16);
-			  	var col12=parseInt(drawcols[1].charAt(3)+drawcols[1].charAt(3),16);
 
-			  	var col20=parseInt(drawcols[2].charAt(1)+drawcols[2].charAt(1),16);
-			  	var col21=parseInt(drawcols[2].charAt(2)+drawcols[2].charAt(2),16);
-			  	var col22=parseInt(drawcols[2].charAt(3)+drawcols[2].charAt(3),16);
-
-			  	var col30=parseInt(drawcols[3].charAt(1)+drawcols[3].charAt(1),16);
-			  	var col31=parseInt(drawcols[3].charAt(2)+drawcols[3].charAt(2),16);
-			  	var col32=parseInt(drawcols[3].charAt(3)+drawcols[3].charAt(3),16);
 
 				var options = {
-				  'colour': aktfarbe,
+
 				  'inverted': one,
 				  'twelvehr': two,
-				  'showdate': three,
-				  'col00': col00,
-				  'col01': col01,
-				  'col02': col02,
-				  'col10': col10,
-				  'col11': col11,
-				  'col12': col12,
-				  'col20': col20,
-				  'col21': col21,
-				  'col22': col22,
-				  'col30': col30,
-				  'col31': col31,
-				  'col32': col32
+				  'showdate': three
+
 				};
 			 
 				// Save for next launch
-				localStorage['colour'] = options['colour'];
 				localStorage['inverted'] = options['inverted'];
 				localStorage['twelvehr'] = options['twelvehr'];
 				localStorage['showdate'] = options['showdate'];
 				
-				localStorage['col00'] = options['col00'];
-				localStorage['col01'] = options['col01'];
-				localStorage['col02'] = options['col02'];
-
-				localStorage['col10'] = options['col10'];
-				localStorage['col11'] = options['col11'];
-				localStorage['col12'] = options['col12'];
-
-				localStorage['col20'] = options['col20'];
-				localStorage['col21'] = options['col21'];
-				localStorage['col22'] = options['col22'];
-
-				localStorage['col30'] = options['col30'];
-				localStorage['col31'] = options['col31'];
-				localStorage['col32'] = options['col32'];
 
 				console.log('Got options: ' + JSON.stringify(options));
 				return options;
@@ -353,32 +215,15 @@ c2_context.fillRect(40,40,20,20);
 				var inverted = document.getElementById('inverted');
 				// Load any previously saved configuration, if available
 				if(localStorage['inverted']) {
-					aktfarbe = JSON.parse(localStorage['colour']);
-					document.getElementById('Counter').innerHTML= "Preset " + (aktfarbe+1).toString() + "/27";
 					console.log("got saved vars %d", aktfarbe);
 					inverted.checked = JSON.parse(localStorage['inverted']);
 					twelvehr.checked = JSON.parse(localStorage['twelvehr']);
 					showdate.checked = JSON.parse(localStorage['showdate']);
-
-					drawcols[0] = rgbToHex(JSON.parse(localStorage['col00']) ,JSON.parse(localStorage['col01']), JSON.parse(localStorage['col02']));
-					drawcols[1] = rgbToHex(JSON.parse(localStorage['col10']) ,JSON.parse(localStorage['col11']), JSON.parse(localStorage['col12']));
-					drawcols[2] = rgbToHex(JSON.parse(localStorage['col20']) ,JSON.parse(localStorage['col21']), JSON.parse(localStorage['col22']));
-					drawcols[3] = rgbToHex(JSON.parse(localStorage['col30']) ,JSON.parse(localStorage['col31']), JSON.parse(localStorage['col32']));
-					
-					var foreg = document.getElementById('foreground');	
-					foreg.value=drawcols[3];
-					var backg = document.getElementById('background');
-					backg.value=drawcols[0];
-					
-					drawcols[0]='#' + drawcols[0].charAt(2) + drawcols[0].charAt(4) + drawcols[0].charAt(6)
-					drawcols[1]='#' + drawcols[1].charAt(2) + drawcols[1].charAt(4) + drawcols[1].charAt(6)
-					drawcols[2]='#' + drawcols[2].charAt(2) + drawcols[2].charAt(4) + drawcols[2].charAt(6)
-					drawcols[3]='#' + drawcols[3].charAt(2) + drawcols[3].charAt(4) + drawcols[3].charAt(6)
 				}
 			})();
 	  
 			draw_it();
-			document.getElementById('Counter').innerHTML=  (aktfarbe+1).toString() + "/27";   
+//			document.getElementById('Counter').innerHTML=  (aktfarbe+1).toString() + "/27";   
 		</script>
 	</body>
 </html>
