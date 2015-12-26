@@ -108,60 +108,7 @@
 		</noscript>
 	<!-- End of StatCounter Code for Default Guide -->
 		<script>
-		
-function dechex(number) {
-  if (number < 0) {
-    number = 0xFFFFFFFF + number + 1;
-  }
-  return parseInt(number, 10)
-    .toString(16);
-}
 
-function componentToHex(c) {
-    var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-}
-
-function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
-
-		
-			var aktfarbe=0;
-			var gg=0;
-			var one=0;
-			var two=0;
-			var three=0;
-
- 			
-			function draw_it() {
-			
-					//calc inbetween
-					
-				for (var stelle = 0; stelle < 3; stelle++) {
-					steps[stelle] = (parseInt(drawcols[0].charAt(stelle + 1),16) - parseInt(drawcols[3].charAt(stelle + 1),16)) / 5 /3 ;
-				}
-				 
-				drawcols[1] = "#" + dechex(parseInt(parseInt(drawcols[3].charAt(1),16) + parseInt(steps[0] * 2) * 5));
-				drawcols[1] = drawcols[1].concat(dechex(parseInt(parseInt(drawcols[3].charAt(2),16) + parseInt(steps[1] * 2) * 5)));
-				drawcols[1] = drawcols[1].concat(dechex(parseInt(parseInt(drawcols[3].charAt(3),16) + parseInt(steps[2] * 2) * 5)));
-				
-				drawcols[2] = "#" + dechex(parseInt(parseInt(drawcols[3].charAt(1),16) + parseInt(steps[0]) * 5));
-				drawcols[2] = drawcols[2].concat(dechex(parseInt(parseInt(drawcols[3].charAt(2),16) + parseInt(steps[1]) * 5)));
-				drawcols[2] = drawcols[2].concat(dechex(parseInt(parseInt(drawcols[3].charAt(3),16) + parseInt(steps[2]) * 5)));
-				
-				// draw
-				var c2 = document.getElementById("Canvas2");
-				var c2_context = c2.getContext("2d");
-				
-				c2_context.fillStyle = drawcols[0];
-				c2_context.fillRect(0, 0, 100, 100);
-				c2_context.fillStyle = drawcols[3];
-				c2_context.fillRect(20, 60, 60, 20);	
-c2_context.fillRect(30,20,30,20);
-c2_context.fillRect(40,40,20,20);
-
-			}
 			
 			function getConfigData() {
 				//    var backgroundColorPicker = document.getElementById('background_color_picker');
