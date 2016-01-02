@@ -34,6 +34,10 @@
 					Show Date
 					<input id='showdate' type='checkbox' class='item-checkbox'>
 				</label>
+				<label class='item'>
+					Vibrate on BT changes
+					<input id='BTvibe' type='checkbox' class='item-checkbox'>
+				</label>
 			</div>
 		</div>  
 			
@@ -71,22 +75,21 @@
 				if(inverted.checked){one=1;} else {one=0;}
 				if(twelvehr.checked){two=1;} else {two=0;}
 				if(showdate.checked){three=1;} else {three=0;}
+				if(BTvibe.checked){four=1;} else {four=0;}
 				
-
-
 				var options = {
 
 				  'inverted': one,
 				  'twelvehr': two,
-				  'showdate': three
-
-				};
+				  'showdate': three,
+				  'BTvibe': four
+				  };
 			 
 				// Save for next launch
 				localStorage['inverted'] = options['inverted'];
 				localStorage['twelvehr'] = options['twelvehr'];
 				localStorage['showdate'] = options['showdate'];
-				
+				localStorage['BTvibe'] = options['BTvibe'];
 
 				console.log('Got options: ' + JSON.stringify(options));
 				return options;
@@ -120,6 +123,7 @@
 					inverted.checked = JSON.parse(localStorage['inverted']);
 					twelvehr.checked = JSON.parse(localStorage['twelvehr']);
 					showdate.checked = JSON.parse(localStorage['showdate']);
+					BTvibe.checked = JSON.parse(localStorage['BTvibe']);
 				}
 			})();
 		</script>
